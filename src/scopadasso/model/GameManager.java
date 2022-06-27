@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class GameManager {
-    private final Player humanPlayer;
-    private final Player cpuPlayer;
+    private Player humanPlayer;
+    private Player cpuPlayer;
     private List<Card> field;
     private Deck deck;
 
@@ -34,6 +34,8 @@ public class GameManager {
     }
 
     private void reinitialize() {
+        humanPlayer = new Player(0);
+        cpuPlayer = new Player(1);
         field = new ArrayList<>();
         deck = new Deck();
     }
@@ -76,7 +78,16 @@ public class GameManager {
     }
 
     private void executeMove(Player player, Card card) {
-        boolean done = searchAndGrabSingleCard(player, card);
+        boolean done = false;
+        if(card.getCardName().equals(CardName.ACE) && cardByNameOccurs(field, CardName.ACE) == 0){
+            grabAll(player);
+            player.addToMop(card);
+            done = true;
+        }
+
+        if(!done) {
+            done = searchAndGrabSingleCard(player, card);
+        }
 
         if (!done) {
             done = searchAndGrabMultipleCards(player, card);
@@ -97,6 +108,13 @@ public class GameManager {
             }
         }
         return false;
+    }
+
+    private void grabAll(Player player) {
+        for (Card card1 : field) {
+            player.addToBank(card1);
+        }
+        field.clear();
     }
 
     private boolean searchAndGrabMultipleCards(Player player, Card card) {
