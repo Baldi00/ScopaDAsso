@@ -2,7 +2,7 @@ package scopadasso.model;
 
 import java.util.Objects;
 
-public class Card {
+public class Card implements Comparable{
     private final Value value;
     private final Seed seed;
 
@@ -51,5 +51,14 @@ public class Card {
     @Override
     public String toString() {
         return "Card{" + "value=" + value + ", seed=" + seed + '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        int compareValue = value.compareTo(((Card)o).value);
+        if(compareValue == 0) {
+            return seed.compareTo(((Card)o).seed);
+        }
+        return compareValue;
     }
 }
