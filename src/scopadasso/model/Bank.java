@@ -5,13 +5,26 @@
  */
 package scopadasso.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Andrea
  */
-public class Bank extends CardSet{
+public class Bank {
+    private final List<Card> bank;
+    
     public Bank() {
-        super();
+        bank = new ArrayList<>();
+    }
+    
+    public void add(Card card) {
+        bank.add(card);
+    }
+    
+    public List<Card> getCards(){
+        return new ArrayList<>(bank);
     }
     
     public int getResultPoints() {
@@ -33,7 +46,7 @@ public class Bank extends CardSet{
     }
     
     private int searchForCard(Card card) {
-        return cards.contains(card) ? 1 : 0;
+        return bank.contains(card) ? 1 : 0;
     }
     
     private int searchForCoinsMajority() {
@@ -44,7 +57,7 @@ public class Bank extends CardSet{
     private int countCoins() {
         int counter = 0;
         for(Value value : Value.values()) {
-            if (cards.contains(new Card(value, Seed.MONEY))) {
+            if (bank.contains(new Card(value, Seed.MONEY))) {
                 counter++;
             }
         }
@@ -67,7 +80,7 @@ public class Bank extends CardSet{
     private int countSeven() {
         int counter = 0;
         for(Seed seed : Seed.values()) {
-            if (cards.contains(new Card(Value.SEVEN, seed))) {
+            if (bank.contains(new Card(Value.SEVEN, seed))) {
                 counter++;
             }
         }
@@ -77,7 +90,7 @@ public class Bank extends CardSet{
     private int countSix() {
         int counter = 0;
         for(Seed seed : Seed.values()) {
-            if (cards.contains(new Card(Value.SIX, seed))) {
+            if (bank.contains(new Card(Value.SIX, seed))) {
                 counter++;
             }
         }
@@ -85,6 +98,6 @@ public class Bank extends CardSet{
     }
     
     private int searchForCardsNumberMajority() {
-        return cards.size()>20 ? 1 : 0;
+        return bank.size()>20 ? 1 : 0;
     }
 }

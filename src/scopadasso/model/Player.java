@@ -5,16 +5,22 @@
  */
 package scopadasso.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Andrea
  */
-public class Player extends CardSet {
+public class Player {
     private final int id;
+    private final List<Card> hand;
+    private final Bank bank;
 
     public Player(int id) {
-        super();
         this.id = id;
+        hand = new ArrayList<>();
+        bank = new Bank();
     }
     
     /**
@@ -24,10 +30,16 @@ public class Player extends CardSet {
      * @throws IllegalStateException if player doesn't have the given card
      */
     public Card playCard(Card card) {
-        if(!cards.contains(card))
+        if(!hand.contains(card))
             throw new IllegalStateException("Player " + id + " doesn't have " + card);
         
-        cards.remove(card);
+        hand.remove(card);
         return card;
+    }
+    
+    public void receiveCard(Card card) {
+        if(hand.size() >= 3)
+            throw new IllegalStateException("Trying to add card to a player that has already 3 cards");
+        hand.add(card);
     }
 }
