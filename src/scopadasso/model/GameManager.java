@@ -92,6 +92,10 @@ public class GameManager {
         if (!done) {
             done = searchAndGrabMultipleCards(player, card);
         }
+
+        if(!done) {
+            placeCardOnField(card);
+        }
     }
 
     private boolean searchAndGrabSingleCard(Player player, Card card) {
@@ -119,7 +123,21 @@ public class GameManager {
 
     private boolean searchAndGrabMultipleCards(Player player, Card card) {
         List<List<Card>> possibleCardsToGrab = searchForPossibleCardsToGrab(card);
-        //TODO: continue
+
+        //TODO: select best move
+        if(!possibleCardsToGrab.isEmpty()) {
+            for (Card card1 : possibleCardsToGrab.get(0)) {
+                player.addToBank(card1);
+            }
+
+            field.removeAll(possibleCardsToGrab.get(0));
+
+            if(field.isEmpty()){
+                player.addToMop(card);
+            }else{
+                player.addToBank(card);
+            }
+        }
         return false;
     }
 
@@ -132,6 +150,10 @@ public class GameManager {
 
         deleteDuplications(permutations);
         return permutations;
+    }
+
+    private void placeCardOnField(Card card){
+        field.add(card);
     }
 
     private void deleteDuplications(List<List<Card>> permutations) {
