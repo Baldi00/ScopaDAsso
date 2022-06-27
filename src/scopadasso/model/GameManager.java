@@ -7,8 +7,8 @@ import java.util.List;
 public class GameManager {
     private final Player humanPlayer;
     private final Player cpuPlayer;
-    private final List<Card> field;
-    private final Deck deck;
+    private List<Card> field;
+    private Deck deck;
 
     public GameManager() {
         humanPlayer = new Player(0);
@@ -26,6 +26,25 @@ public class GameManager {
     private void prepareField() {
         for (int i = 0; i < 4; i++)
             field.add(deck.extract());
+
+        if(cardByNameOccurs(field, CardName.ACE) > 1){
+            reinitialize();
+            preparation();
+        }
+    }
+
+    private void reinitialize() {
+        field = new ArrayList<>();
+        deck = new Deck();
+    }
+
+    private int cardByNameOccurs(List<Card> cards, CardName cardName) {
+        int counter = 0;
+        for (Seed seed : Seed.values()) {
+            if (cards.contains(new Card(cardName, seed)))
+                counter++;
+        }
+        return counter;
     }
 
     public void giveThreeCardsToPlayers() {
