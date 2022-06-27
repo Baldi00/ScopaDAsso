@@ -5,6 +5,8 @@
  */
 package scopadasso;
 
+import scopadasso.view.View;
+
 /**
  *
  * @author Andrea
@@ -15,7 +17,7 @@ public class ScopaDAsso {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        View view = new View();
     }
     
 }
