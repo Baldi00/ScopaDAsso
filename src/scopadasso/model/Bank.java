@@ -14,20 +14,27 @@ import java.util.List;
  */
 public class Bank {
     private final List<Card> bank;
+    private final List<Card> mop;
     
     public Bank() {
         bank = new ArrayList<>();
+        mop = new ArrayList<>();
     }
     
-    public void add(Card card) {
+    public void addToBank(Card card) {
         bank.add(card);
     }
     
-    public List<Card> getCards(){
-        return new ArrayList<>(bank);
+    public void addToMop(Card card) {
+        bank.add(card);
+        mop.add(card);
     }
     
     public int getResultPoints() {
+        return getBankResultPoints() + mop.size();
+    }
+    
+    public int getBankResultPoints() {
         int beautifulKing = searchForBeautifulKing();
         int beautifulSeven = searchForBeautifulSeven();
         int coins = searchForCoinsMajority();
