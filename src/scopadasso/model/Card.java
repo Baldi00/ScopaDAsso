@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package scopadasso.model;
 
 import java.util.Objects;
 
-/**
- *
- * @author Andrea
- */
 public class Card {
     private final Value value;
     private final Seed seed;

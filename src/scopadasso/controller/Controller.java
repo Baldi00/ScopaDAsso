@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package scopadasso.controller;
 
 import scopadasso.model.Card;
@@ -12,10 +7,6 @@ import scopadasso.view.View;
 import javax.swing.*;
 import java.util.List;
 
-/**
- *
- * @author Andrea
- */
 public class Controller {
     private final GameManager gameManager;
     private final View view;
