@@ -1,6 +1,6 @@
 package scopadasso.model;
 
-public enum Value {
+public enum CardName {
     ACE(1),
     TWO(2),
     THREE(3),
@@ -14,7 +14,7 @@ public enum Value {
 
     private final int value;
 
-    Value(int value){
+    CardName(int value) {
         this.value = value;
     }
 

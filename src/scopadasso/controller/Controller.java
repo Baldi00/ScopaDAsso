@@ -10,9 +10,9 @@ import java.util.List;
 public class Controller {
     private final GameManager gameManager;
     private final View view;
-    private CardClickListener[] cardClickListeners;
-    
-    public Controller(GameManager gameManager, View view){
+    private final CardClickListener[] cardClickListeners;
+
+    public Controller(GameManager gameManager, View view) {
         this.gameManager = gameManager;
         this.view = view;
         cardClickListeners = new CardClickListener[3];
@@ -32,13 +32,13 @@ public class Controller {
     public void updateHumanPlayerCardClickListeners() {
         JLabel[] humanPlayerCardsLabels = view.getHumanPlayerCardsLabels();
         List<Card> humanPlayerCards = gameManager.getHumanPlayer().getHand();
-        for (int i=0; i<humanPlayerCards.size(); i++){
+        for (int i = 0; i < humanPlayerCards.size(); i++) {
             humanPlayerCardsLabels[i].removeMouseListener(cardClickListeners[i]);
 
             cardClickListeners[i] = new CardClickListener(humanPlayerCards.get(i), gameManager, this);
             humanPlayerCardsLabels[i].addMouseListener(cardClickListeners[i]);
         }
-        for (int i=humanPlayerCards.size(); i<3; i++){
+        for (int i = humanPlayerCards.size(); i < 3; i++) {
             humanPlayerCardsLabels[i].removeMouseListener(cardClickListeners[i]);
         }
     }

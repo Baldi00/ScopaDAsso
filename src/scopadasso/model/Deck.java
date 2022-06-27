@@ -1,45 +1,45 @@
 package scopadasso.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private final List<Card> deck;
+    private final List<Card> cards;
 
     public Deck() {
-        deck = new ArrayList<>();
+        cards = new ArrayList<>();
         fillDeck();
     }
-    
+
     private void fillDeck() {
-        for(Value value : Value.values()) {
-            for(Seed seed : Seed.values()) {
-                deck.add(new Card(value, seed));
+        for (CardName cardName : CardName.values()) {
+            for (Seed seed : Seed.values()) {
+                cards.add(new Card(cardName, seed));
             }
         }
     }
-    
+
     public void shuffleDeck() {
-        Collections.shuffle(deck);
+        Collections.shuffle(cards);
     }
-    
+
     /**
      * Extract a card and removes it from deck
+     *
      * @return the extracted card
      * @throws IllegalStateException if deck is empty
      */
     public Card extract() {
-        if(deck.isEmpty())
+        if (cards.isEmpty())
             throw new IllegalStateException("Cannot extract card, the deck is empty");
-        
-        Card extracted = deck.get(0);
-        deck.remove(0);
+
+        Card extracted = cards.get(0);
+        cards.remove(0);
         return extracted;
     }
-    
+
     public int size() {
-        return deck.size();
+        return cards.size();
     }
 }

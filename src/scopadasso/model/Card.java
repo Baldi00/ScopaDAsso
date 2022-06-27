@@ -2,17 +2,10 @@ package scopadasso.model;
 
 import java.util.Objects;
 
-public class Card implements Comparable{
-    private final Value value;
-    private final Seed seed;
+public record Card(CardName cardName, Seed seed) implements Comparable<Card> {
 
-    public Card(Value value, Seed seed) {
-        this.value = value;
-        this.seed = seed;
-    }
-
-    public Value getValue() {
-        return value;
+    public CardName getCardName() {
+        return cardName;
     }
 
     public Seed getSeed() {
@@ -22,7 +15,7 @@ public class Card implements Comparable{
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 17 * hash + Objects.hashCode(this.value);
+        hash = 17 * hash + Objects.hashCode(this.cardName);
         hash = 17 * hash + Objects.hashCode(this.seed);
         return hash;
     }
@@ -39,25 +32,22 @@ public class Card implements Comparable{
             return false;
         }
         final Card other = (Card) obj;
-        if (this.value != other.value) {
+        if (this.cardName != other.cardName) {
             return false;
         }
-        if (this.seed != other.seed) {
-            return false;
-        }
-        return true;
+        return this.seed == other.seed;
     }
 
     @Override
     public String toString() {
-        return "Card{" + "value=" + value + ", seed=" + seed + '}';
+        return "Card{" + "value=" + cardName + ", seed=" + seed + '}';
     }
 
     @Override
-    public int compareTo(Object o) {
-        int compareValue = value.compareTo(((Card)o).value);
-        if(compareValue == 0) {
-            return seed.compareTo(((Card)o).seed);
+    public int compareTo(Card o) {
+        int compareValue = cardName.compareTo(o.cardName);
+        if (compareValue == 0) {
+            return seed.compareTo(o.seed);
         }
         return compareValue;
     }

@@ -13,25 +13,24 @@ public class Player {
         hand = new ArrayList<>();
         bank = new Bank();
     }
-    
+
     /**
      * Removes the card from the hand
+     *
      * @param card the card you want to play
      * @return the played card
      * @throws IllegalStateException if player doesn't have the given card
      */
     public Card playCard(Card card) {
-        if(!hand.contains(card))
+        if (!hand.contains(card))
             throw new IllegalStateException("Player " + id + " doesn't have " + card);
-
-        System.out.println("Played " + card);
 
         hand.remove(card);
         return card;
     }
-    
+
     public void receiveCard(Card card) {
-        if(hand.size() >= 3)
+        if (hand.size() >= 3)
             throw new IllegalStateException("Trying to add card to a player that has already 3 cards");
         hand.add(card);
     }
@@ -52,7 +51,7 @@ public class Player {
         bank.addToMop(card);
     }
 
-    public void addToBank(Card card){
+    public void addToBank(Card card) {
         bank.addToBank(card);
     }
 }

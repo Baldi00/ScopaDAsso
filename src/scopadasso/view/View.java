@@ -1,33 +1,37 @@
 package scopadasso.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.util.List;
-import javax.swing.*;
-
 import scopadasso.model.Card;
 import scopadasso.model.Deck;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
+
 public class View {
-    private JFrame frame;
-    private JPanel mainPanel, fieldPanel, humanPlayerPanel, cpuPlayerPanel;
-    private JLabel [] humanPlayerCardsLabels, cpuPlayerCardsLabels, fieldLabels;
-    private JLabel deckLabel, humanPlayerBankLabel, cpuPlayerBankLabel;
-    
-    public View(){
+    private final JFrame frame;
+    private final JPanel mainPanel;
+    private final JPanel fieldPanel;
+    private final JPanel humanPlayerPanel;
+    private final JPanel cpuPlayerPanel;
+    private final JLabel[] humanPlayerCardsLabels;
+    private final JLabel[] cpuPlayerCardsLabels;
+    private final JLabel[] fieldLabels;
+    private final JLabel deckLabel;
+    private final JLabel humanPlayerBankLabel;
+    private final JLabel cpuPlayerBankLabel;
+
+    public View() {
         //INITIALIZATIONS
         frame = new JFrame("Scopa d'Asso");
         mainPanel = new JPanel(new BorderLayout());
         fieldPanel = new JPanel(new GridLayout(2, 4, 3, 3));
         humanPlayerPanel = new JPanel(new GridLayout(2, 3, 3, 3));
         cpuPlayerPanel = new JPanel(new GridLayout(2, 3, 3, 3));
-        
+
         humanPlayerCardsLabels = new JLabel[3];
         cpuPlayerCardsLabels = new JLabel[3];
-        
-        for(int i=0; i<3; i++) {
+
+        for (int i = 0; i < 3; i++) {
             humanPlayerCardsLabels[i] = new JLabel();
             cpuPlayerCardsLabels[i] = new JLabel();
             humanPlayerPanel.add(humanPlayerCardsLabels[i]);
@@ -44,22 +48,22 @@ public class View {
         humanPlayerPanel.add(new JLabel(""));
         cpuPlayerPanel.add(new JLabel(""));
         cpuPlayerPanel.add(new JLabel(""));
-        
+
         fieldLabels = new JLabel[8];
-        for(int i=0; i<8; i++) {
+        for (int i = 0; i < 8; i++) {
             fieldLabels[i] = new JLabel();
             fieldPanel.add(fieldLabels[i]);
         }
-        
+
         deckLabel = new JLabel();
-        
+
         //ASSEMBLY
         mainPanel.add(humanPlayerPanel, BorderLayout.WEST);
         mainPanel.add(fieldPanel, BorderLayout.CENTER);
         mainPanel.add(cpuPlayerPanel, BorderLayout.EAST);
-        
+
         frame.add(mainPanel);
-        
+
         //LAST SETTINGS AND SHOW
         frame.setSize(1200, 800);
         frame.setLocationRelativeTo(null);
@@ -72,7 +76,7 @@ public class View {
             humanPlayerCardsLabels[i].setText("");
         }
         for (int i = 0; i < hand.size(); i++) {
-            humanPlayerCardsLabels[i].setText(hand.get(i).getValue() + " " + hand.get(i).getSeed());
+            humanPlayerCardsLabels[i].setText(hand.get(i).getCardName() + " " + hand.get(i).getSeed());
         }
     }
 
@@ -85,7 +89,7 @@ public class View {
             cpuPlayerCardsLabels[i].setText("");
         }
         for (int i = 0; i < hand.size(); i++) {
-            cpuPlayerCardsLabels[i].setText("Card"+i);
+            cpuPlayerCardsLabels[i].setText("Card" + i);
         }
     }
 
@@ -94,7 +98,7 @@ public class View {
     }
 
     public void setDeck(Deck deck) {
-        deckLabel.setText(""+deck.size());
+        deckLabel.setText("" + deck.size());
     }
 
     public void setField(List<Card> field) {
@@ -102,7 +106,7 @@ public class View {
             fieldLabels[i].setText("");
         }
         for (int i = 0; i < field.size(); i++) {
-            fieldLabels[i].setText(field.get(i).getValue() + " " + field.get(i).getSeed());
+            fieldLabels[i].setText(field.get(i).getCardName() + " " + field.get(i).getSeed());
         }
     }
 

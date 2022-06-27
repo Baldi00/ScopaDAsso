@@ -13,7 +13,7 @@ public class ScopaDAsso {
         GameManager gameManager = new GameManager();
         gameManager.preparation();
         View view = new View();
-        Controller controller = new Controller(gameManager, view);
+        new Controller(gameManager, view);
     }
-    
+
 }
