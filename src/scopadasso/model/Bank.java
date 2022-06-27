@@ -107,4 +107,20 @@ public class Bank {
     private int searchForCardsNumberMajority() {
         return bank.size()>20 ? 1 : 0;
     }
+    
+    public List<Card> getBankWithoutMop() {
+        List<Card> bankWithoutMop = new ArrayList<>();
+        
+        for(Card card : bank){
+            if(!mop.contains(card)){
+                bankWithoutMop.add(card);
+            }
+        }
+        
+        return bankWithoutMop;
+    }
+
+    public List<Card> getMop() {
+        return mop;
+    }
 }

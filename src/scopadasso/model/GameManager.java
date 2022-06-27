@@ -42,4 +42,20 @@ public class GameManager {
             cpuPlayer.receiveCard(deck.extract());
         }
     }
+
+    public Player getHumanPlayer() {
+        return humanPlayer;
+    }
+
+    public Player getCpuPlayer() {
+        return cpuPlayer;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public List<Card> getField() {
+        return field;
+    }
 }

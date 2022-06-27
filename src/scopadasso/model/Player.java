@@ -42,4 +42,16 @@ public class Player {
             throw new IllegalStateException("Trying to add card to a player that has already 3 cards");
         hand.add(card);
     }
+
+    public List<Card> getHand() {
+        return hand;
+    }
+
+    public List<Card> getBankWithoutMop() {
+        return bank.getBankWithoutMop();
+    }
+
+    public List<Card> getMop() {
+        return bank.getMop();
+    }
 }

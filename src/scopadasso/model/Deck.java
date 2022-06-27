@@ -47,4 +47,8 @@ public class Deck {
         deck.remove(0);
         return extracted;
     }
+    
+    public int size() {
+        return deck.size();
+    }
 }
