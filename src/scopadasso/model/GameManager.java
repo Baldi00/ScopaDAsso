@@ -82,6 +82,7 @@ public class GameManager {
 
     private boolean searchAndGrabMultipleCards(Player player, Card card) {
         List<List<Card>> possibleCardsToGrab = searchForPossibleCardsToGrab(card);
+        //TODO: continue
         return false;
     }
 
