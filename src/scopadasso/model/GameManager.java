@@ -58,4 +58,8 @@ public class GameManager {
     public List<Card> getField() {
         return field;
     }
+
+    public void humanPlayerPlayCard(Card card) {
+        humanPlayer.playCard(card);
+    }
 }

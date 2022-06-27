@@ -32,7 +32,9 @@ public class Player {
     public Card playCard(Card card) {
         if(!hand.contains(card))
             throw new IllegalStateException("Player " + id + " doesn't have " + card);
-        
+
+        System.out.println("Played " + card);
+
         hand.remove(card);
         return card;
     }

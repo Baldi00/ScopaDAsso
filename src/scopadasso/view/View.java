@@ -10,14 +10,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
+
 import scopadasso.model.Card;
 import scopadasso.model.Deck;
 
@@ -29,15 +23,15 @@ public class View {
     private JFrame frame;
     private JPanel mainPanel, fieldPanel, humanPlayerPanel, cpuPlayerPanel;
     private JLabel [] humanPlayerCardsLabels, cpuPlayerCardsLabels, fieldLabels;
-    private JLabel deckLabel;
+    private JLabel deckLabel, humanPlayerBankLabel, cpuPlayerBankLabel;
     
     public View(){
         //INITIALIZATIONS
         frame = new JFrame("Scopa d'Asso");
         mainPanel = new JPanel(new BorderLayout());
-        fieldPanel = new JPanel(new GridLayout(2, 4, 0, 0));
-        humanPlayerPanel = new JPanel(new GridLayout(1, 3, 0, 0));
-        cpuPlayerPanel = new JPanel(new GridLayout(1, 3, 0, 0));
+        fieldPanel = new JPanel(new GridLayout(2, 4, 3, 3));
+        humanPlayerPanel = new JPanel(new GridLayout(2, 3, 3, 3));
+        cpuPlayerPanel = new JPanel(new GridLayout(2, 3, 3, 3));
         
         humanPlayerCardsLabels = new JLabel[3];
         cpuPlayerCardsLabels = new JLabel[3];
@@ -48,6 +42,17 @@ public class View {
             humanPlayerPanel.add(humanPlayerCardsLabels[i]);
             cpuPlayerPanel.add(cpuPlayerCardsLabels[i]);
         }
+
+        humanPlayerBankLabel = new JLabel("0 carte e 0 scope");
+        cpuPlayerBankLabel = new JLabel("0 carte e 0 scope");
+        humanPlayerPanel.add(humanPlayerBankLabel);
+        cpuPlayerPanel.add(cpuPlayerBankLabel);
+
+        // dummy
+        humanPlayerPanel.add(new JLabel(""));
+        humanPlayerPanel.add(new JLabel(""));
+        cpuPlayerPanel.add(new JLabel(""));
+        cpuPlayerPanel.add(new JLabel(""));
         
         fieldLabels = new JLabel[8];
         for(int i=0; i<8; i++) {
@@ -67,7 +72,7 @@ public class View {
         //LAST SETTINGS AND SHOW
         frame.setSize(1200, 800);
         frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
     }
 
@@ -80,13 +85,8 @@ public class View {
         }
     }
 
-    public void setHumanPlayerBank(List<Card> bankWithoutMop) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        
-    }
-
-    public void setHumanPlayerMop(List<Card> mop) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setHumanPlayerBank(List<Card> bankWithoutMop, List<Card> mop) {
+        humanPlayerBankLabel.setText(bankWithoutMop.size() + " carte e " + mop.size() + " scope");
     }
 
     public void setCpuPlayerCards(List<Card> hand) {
@@ -98,12 +98,8 @@ public class View {
         }
     }
 
-    public void setCpuPlayerBank(List<Card> bankWithoutMop) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void setCpuPlayerMop(List<Card> mop) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setCpuPlayerBank(List<Card> bankWithoutMop, List<Card> mop) {
+        cpuPlayerBankLabel.setText(bankWithoutMop.size() + " carte e " + mop.size() + " scope");
     }
 
     public void setDeck(Deck deck) {
@@ -117,5 +113,9 @@ public class View {
         for (int i = 0; i < field.size(); i++) {
             fieldLabels[i].setText(field.get(i).getValue() + " " + field.get(i).getSeed());
         }
+    }
+
+    public JLabel[] getHumanPlayerCardsLabels() {
+        return humanPlayerCardsLabels;
     }
 }
