@@ -73,8 +73,19 @@ public class GameManager {
     }
 
     public void humanPlayerPlayCard(Card card) {
-        humanPlayer.playCard(card);
-        executeMove(humanPlayer, card);
+        if(!humanPlayer.getHand().isEmpty()) {
+            humanPlayer.playCard(card);
+            executeMove(humanPlayer, card);
+        }
+    }
+
+    public void cpuPlayerPlayCard() {
+        //TODO: improve card selection to be the best one
+        if(!cpuPlayer.getHand().isEmpty()){
+            Card cpuPlayedCard = cpuPlayer.getHand().get(0);
+            cpuPlayer.playCard(cpuPlayedCard);
+            executeMove(cpuPlayer, cpuPlayedCard);
+        }
     }
 
     private void executeMove(Player player, Card card) {
@@ -198,5 +209,11 @@ public class GameManager {
             counter += card.getCardName().getValue();
         }
         return counter;
+    }
+
+    public void checkIfTurnOverAndRefillCards() {
+        if (humanPlayer.getHand().isEmpty() && cpuPlayer.getHand().isEmpty()){
+            giveThreeCardsToPlayers();
+        }
     }
 }
