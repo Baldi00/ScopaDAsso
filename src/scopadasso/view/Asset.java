@@ -1,5 +1,12 @@
 package scopadasso.view;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
+
 public enum Asset {
     ACE_MONEY("img1.jpg"),
     TWO_MONEY("img2.jpg"),
@@ -44,6 +51,7 @@ public enum Asset {
     BACK("img41.jpg");
 
     private final String path;
+    private final ClassLoader cl = Asset.class.getClassLoader();
 
     Asset(String path){
         this.path = path;
@@ -51,5 +59,15 @@ public enum Asset {
 
     public String getPath() {
         return path;
+    }
+
+    public Image getSprite(int width, int height) {
+        try (InputStream stream = cl.getResourceAsStream(path)) {
+            Image image = ImageIO.read(stream);
+            image = Utils.resize((BufferedImage) image, width, height);
+            return image;
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 }

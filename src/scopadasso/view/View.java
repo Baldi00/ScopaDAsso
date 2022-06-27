@@ -20,6 +20,9 @@ public class View {
     private final JLabel humanPlayerBankLabel;
     private final JLabel cpuPlayerBankLabel;
 
+    private final static int CARD_WIDTH = 150;
+    private final static int CARD_HEIGHT = 250;
+
     public View() {
         //INITIALIZATIONS
         frame = new JFrame("Scopa d'Asso");
@@ -34,6 +37,8 @@ public class View {
         for (int i = 0; i < 3; i++) {
             humanPlayerCardsLabels[i] = new JLabel();
             cpuPlayerCardsLabels[i] = new JLabel();
+            humanPlayerCardsLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
+            cpuPlayerCardsLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
             humanPlayerPanel.add(humanPlayerCardsLabels[i]);
             cpuPlayerPanel.add(cpuPlayerCardsLabels[i]);
         }
@@ -52,8 +57,10 @@ public class View {
         fieldLabels = new JLabel[8];
         for (int i = 0; i < 8; i++) {
             fieldLabels[i] = new JLabel();
+            fieldLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
             fieldPanel.add(fieldLabels[i]);
         }
+        fieldPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         deckLabel = new JLabel();
 
@@ -65,7 +72,7 @@ public class View {
         frame.add(mainPanel);
 
         //LAST SETTINGS AND SHOW
-        frame.setSize(1200, 800);
+        frame.setSize(1800, 1000);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
@@ -73,10 +80,10 @@ public class View {
 
     public void setHumanPlayerCards(List<Card> hand) {
         for (int i = 0; i < 3; i++) {
-            humanPlayerCardsLabels[i].setText("");
+            humanPlayerCardsLabels[i].setIcon(null);
         }
         for (int i = 0; i < hand.size(); i++) {
-            humanPlayerCardsLabels[i].setText(hand.get(i).getCardName() + " " + hand.get(i).getSeed());
+            humanPlayerCardsLabels[i].setIcon(new ImageIcon(Utils.assetFromCard(hand.get(i)).getSprite(CARD_WIDTH, CARD_HEIGHT)));
         }
     }
 
@@ -86,10 +93,10 @@ public class View {
 
     public void setCpuPlayerCards(List<Card> hand) {
         for (int i = 0; i < 3; i++) {
-            cpuPlayerCardsLabels[i].setText("");
+            cpuPlayerCardsLabels[i].setIcon(null);
         }
         for (int i = 0; i < hand.size(); i++) {
-            cpuPlayerCardsLabels[i].setText("Card" + i);
+            cpuPlayerCardsLabels[i].setIcon(new ImageIcon(Asset.BACK.getSprite(CARD_WIDTH, CARD_HEIGHT)));
         }
     }
 
@@ -103,10 +110,10 @@ public class View {
 
     public void setField(List<Card> field) {
         for (int i = 0; i < 8; i++) {
-            fieldLabels[i].setText("");
+            fieldLabels[i].setIcon(null);
         }
         for (int i = 0; i < field.size(); i++) {
-            fieldLabels[i].setText(field.get(i).getCardName() + " " + field.get(i).getSeed());
+            fieldLabels[i].setIcon(new ImageIcon(Utils.assetFromCard(field.get(i)).getSprite(CARD_WIDTH, CARD_HEIGHT)));
         }
     }
 
