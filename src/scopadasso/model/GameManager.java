@@ -84,11 +84,10 @@ public class GameManager {
         if(!cpuPlayer.getHand().isEmpty()){
             Card cpuPlayedCard = cpuPlayer.getHand().get(0);
             cpuPlayer.playCard(cpuPlayedCard);
-            executeMove(cpuPlayer, cpuPlayedCard);
         }
     }
 
-    private void executeMove(Player player, Card card) {
+    public void executeMove(Player player, Card card) {
         boolean done = false;
         if(card.getCardName().equals(CardName.ACE) && cardByNameOccurs(field, CardName.ACE) == 0){
             grabAll(player);

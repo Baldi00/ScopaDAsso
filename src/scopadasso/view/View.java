@@ -19,6 +19,7 @@ public class View {
     private final JLabel deckLabel;
     private final JLabel humanPlayerBankLabel;
     private final JLabel cpuPlayerBankLabel;
+    private final JButton confirmCpuActionButton;
 
     private final static int CARD_WIDTH = 150;
     private final static int CARD_HEIGHT = 250;
@@ -30,6 +31,9 @@ public class View {
         fieldPanel = new JPanel(new GridLayout(2, 4, 3, 3));
         humanPlayerPanel = new JPanel(new GridLayout(2, 3, 3, 3));
         cpuPlayerPanel = new JPanel(new GridLayout(2, 3, 3, 3));
+        confirmCpuActionButton = new JButton("Prosegui");
+
+        confirmCpuActionButton.setEnabled(false);
 
         humanPlayerCardsLabels = new JLabel[3];
         cpuPlayerCardsLabels = new JLabel[3];
@@ -52,7 +56,7 @@ public class View {
         humanPlayerPanel.add(new JLabel(""));
         humanPlayerPanel.add(new JLabel(""));
         cpuPlayerPanel.add(new JLabel(""));
-        cpuPlayerPanel.add(new JLabel(""));
+        cpuPlayerPanel.add(confirmCpuActionButton);
 
         fieldLabels = new JLabel[8];
         for (int i = 0; i < 8; i++) {
@@ -91,12 +95,19 @@ public class View {
         humanPlayerBankLabel.setText(bankWithoutMop.size() + " carte e " + mop.size() + " scope");
     }
 
-    public void setCpuPlayerCards(List<Card> hand) {
+    public void setCpuPlayerCards(List<Card> hand, Card lastPlayedCard) {
         for (int i = 0; i < 3; i++) {
             cpuPlayerCardsLabels[i].setIcon(null);
         }
         for (int i = 0; i < hand.size(); i++) {
             cpuPlayerCardsLabels[i].setIcon(new ImageIcon(Asset.BACK.getSprite(CARD_WIDTH, CARD_HEIGHT)));
+        }
+
+        if(lastPlayedCard != null) {
+            cpuPlayerCardsLabels[hand.size()].setIcon(new ImageIcon(Utils.assetFromCard(lastPlayedCard).getSprite(CARD_WIDTH, CARD_HEIGHT)));
+            confirmCpuActionButton.setEnabled(true);
+        }else{
+            confirmCpuActionButton.setEnabled(false);
         }
     }
 
@@ -119,5 +130,9 @@ public class View {
 
     public JLabel[] getHumanPlayerCardsLabels() {
         return humanPlayerCardsLabels;
+    }
+
+    public JButton getConfirmCpuActionButton() {
+        return confirmCpuActionButton;
     }
 }

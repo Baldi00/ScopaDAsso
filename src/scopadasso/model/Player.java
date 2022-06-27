@@ -7,6 +7,7 @@ public class Player {
     private final int id;
     private final List<Card> hand;
     private final Bank bank;
+    private Card lastPlayedCard;
 
     public Player(int id) {
         this.id = id;
@@ -26,6 +27,7 @@ public class Player {
             throw new IllegalStateException("Player " + id + " doesn't have " + card);
 
         hand.remove(card);
+        lastPlayedCard = card;
         return card;
     }
 
@@ -53,5 +55,13 @@ public class Player {
 
     public void addToBank(Card card) {
         bank.addToBank(card);
+    }
+
+    public Card getLastPlayedCard() {
+        return lastPlayedCard;
+    }
+
+    public void resetLastPlayedCard() {
+        lastPlayedCard = null;
     }
 }

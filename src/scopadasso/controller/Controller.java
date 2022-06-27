@@ -17,19 +17,20 @@ public class Controller {
         this.view = view;
         cardClickListeners = new CardClickListener[3];
         updateView();
-        updateHumanPlayerCardClickListeners();
+        addConfirmCpuActionButtonListener();
     }
 
     public void updateView() {
         view.setHumanPlayerCards(gameManager.getHumanPlayer().getHand());
         view.setHumanPlayerBank(gameManager.getHumanPlayer().getBankWithoutMop(), gameManager.getHumanPlayer().getMop());
-        view.setCpuPlayerCards(gameManager.getCpuPlayer().getHand());
+        view.setCpuPlayerCards(gameManager.getCpuPlayer().getHand(), gameManager.getCpuPlayer().getLastPlayedCard());
         view.setCpuPlayerBank(gameManager.getCpuPlayer().getBankWithoutMop(), gameManager.getCpuPlayer().getMop());
         view.setDeck(gameManager.getDeck());
         view.setField(gameManager.getField());
+        updateHumanPlayerCardClickListeners();
     }
 
-    public void updateHumanPlayerCardClickListeners() {
+    private void updateHumanPlayerCardClickListeners() {
         JLabel[] humanPlayerCardsLabels = view.getHumanPlayerCardsLabels();
         List<Card> humanPlayerCards = gameManager.getHumanPlayer().getHand();
         for (int i = 0; i < humanPlayerCards.size(); i++) {
@@ -43,5 +44,7 @@ public class Controller {
         }
     }
 
-
+    private void addConfirmCpuActionButtonListener() {
+        view.getConfirmCpuActionButton().addActionListener(new ConfirmCpuActionListener(gameManager, this));
+    }
 }
