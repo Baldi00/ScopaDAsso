@@ -20,7 +20,6 @@ public class Deck {
     public Deck() {
         deck = new ArrayList<>();
         fillDeck();
-        shuffleDeck();
     }
     
     private void fillDeck() {
