@@ -148,6 +148,7 @@ public class GameManager {
             }else{
                 player.addToBank(card);
             }
+            return true;
         }
         return false;
     }
