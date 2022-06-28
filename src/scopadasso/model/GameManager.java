@@ -223,6 +223,9 @@ public class GameManager {
 
     private void calculateLeastWorseCardToPlay(List<Card> hand, Map<Card, Integer> points) {
         for (Card card : hand) {
+            if (card.getCardName().equals(CardName.ACE)) {
+                points.put(card, points.get(card) - 10);
+            }
             if (getFieldValue() + card.getCardName().getValue() <= 10) {
                 points.put(card, points.get(card) - 3);
             }
