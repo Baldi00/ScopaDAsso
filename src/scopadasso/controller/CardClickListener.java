@@ -21,9 +21,31 @@ public class CardClickListener implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         if (!gameManager.hasCpuPlayedCard()) {
             gameManager.humanPlayerPlayCard(card);
-            gameManager.calculateAdditionalPointsFor(gameManager.getCpuPlayer());
-            gameManager.cpuPlayerPlayCard();
+
+            if (gameManager.isTurnOver()) {
+                if (gameManager.isGameOver()) {
+                    gameManager.giveLastFieldCardsToLastPlayerWhoPicked();
+                    gameManager.calculateMatchResults();
+                    controller.showMatchResults();
+                } else {
+                    gameManager.giveThreeCardsToPlayers();
+                    if(gameManager.getStartingPlayer() == gameManager.getCpuPlayer()) {
+                        gameManager.calculateAdditionalPointsFor(gameManager.getCpuPlayer());
+                        gameManager.cpuPlayerPlayCard();
+                    }else {
+                        gameManager.calculateAdditionalPointsFor(gameManager.getHumanPlayer());
+                    }
+                }
+            } else {
+                gameManager.calculateAdditionalPointsFor(gameManager.getCpuPlayer());
+                gameManager.cpuPlayerPlayCard();
+            }
+
             controller.updateView();
+
+            if(gameManager.isLastTurnOfTheGame()){
+                controller.setActionButton("nextGame", "Prossima Partita", true);
+            }
         }
     }
 

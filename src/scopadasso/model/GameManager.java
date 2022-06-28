@@ -9,6 +9,7 @@ public class GameManager {
     private Deck deck;
     private boolean hasCpuPlayedCard;
     private Player lastPlayerWhoPickedCards;
+    private Player startingPlayer;
 
     public GameManager() {
         setup();
@@ -20,6 +21,7 @@ public class GameManager {
         field = new ArrayList<>();
         deck = new Deck();
         hasCpuPlayedCard = false;
+        startingPlayer = humanPlayer;
     }
 
     public void preparation() {
@@ -272,6 +274,7 @@ public class GameManager {
         humanPlayer.clear();
         cpuPlayer.clear();
         deck = new Deck();
+        startingPlayer = startingPlayer == humanPlayer ? cpuPlayer : humanPlayer;
     }
 
     // UTILS
@@ -410,7 +413,7 @@ public class GameManager {
     }
 
     public boolean isLastTurnOfTheGame() {
-        return isTurnOver() && isGameOver();
+        return isTurnOver() && isGameOver() && !hasCpuPlayedCard;
     }
 
     public void calculateAdditionalPointsFor(Player player) {
@@ -451,5 +454,9 @@ public class GameManager {
 
     public boolean hasCpuPlayedCard() {
         return hasCpuPlayedCard;
+    }
+
+    public Player getStartingPlayer() {
+        return startingPlayer;
     }
 }

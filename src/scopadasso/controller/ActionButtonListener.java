@@ -40,6 +40,12 @@ public class ActionButtonListener implements ActionListener {
             gameManager.nextMatch();
             gameManager.preparation();
             controller.setActionButton("proceed", "Prosegui", false);
+
+            if(gameManager.getStartingPlayer() == gameManager.getCpuPlayer()) {
+                gameManager.calculateAdditionalPointsFor(gameManager.getCpuPlayer());
+                gameManager.cpuPlayerPlayCard();
+            }
+
             controller.updateView();
         }
     }
