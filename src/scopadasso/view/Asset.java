@@ -48,7 +48,8 @@ public enum Asset {
     JACK_SWORD("img38.jpg"),
     HORSE_SWORD("img39.jpg"),
     KING_SWORD("img40.jpg"),
-    BACK("img41.jpg");
+    BACK("img41.jpg"),
+    BACK_ROTATED("img42.jpg");
 
     private final String path;
     private final ClassLoader cl = Asset.class.getClassLoader();
