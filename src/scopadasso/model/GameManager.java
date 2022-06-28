@@ -10,6 +10,10 @@ public class GameManager {
     private boolean hasCpuPlayedCard;
 
     public GameManager() {
+        setup();
+    }
+
+    private void setup() {
         humanPlayer = new Player();
         cpuPlayer = new Player();
         field = new ArrayList<>();
@@ -28,16 +32,9 @@ public class GameManager {
             field.add(deck.extract());
 
         if (cardByNameOccurs(field, CardName.ACE) > 1) {
-            reinitialize();
+            setup();
             preparation();
         }
-    }
-
-    private void reinitialize() {
-        humanPlayer = new Player();
-        cpuPlayer = new Player();
-        field = new ArrayList<>();
-        deck = new Deck();
     }
 
     public void giveThreeCardsToPlayers() {
