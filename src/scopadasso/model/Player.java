@@ -59,12 +59,12 @@ public class Player {
         return lastPlayedCard;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
     public int getPoints() {
         return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 
     public Bank getBank() {

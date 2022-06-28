@@ -10,6 +10,7 @@ import java.util.List;
 
 public class View {
 
+    private static final String CARDS_STRING = " carte";
     private static final int CARD_WIDTH = 150;
     private static final int CARD_HEIGHT = 250;
 
@@ -116,18 +117,18 @@ public class View {
     public void setHumanPlayerBank(List<Card> bankWithoutMop, List<Card> mop) {
         humanPlayerMopsLabels.clear();
         humanPlayerMopsPanel.removeAll();
-        for(Card card : mop) {
+        for (Card card : mop) {
             humanPlayerMopsLabels.add(new JLabel(new ImageIcon(Utils.assetFromCard(card).getSprite(CARD_WIDTH, CARD_HEIGHT))));
         }
-        for(JLabel label : humanPlayerMopsLabels) {
+        for (JLabel label : humanPlayerMopsLabels) {
             humanPlayerMopsPanel.add(label);
         }
 
-        if(bankWithoutMop.isEmpty()) {
+        if (bankWithoutMop.isEmpty()) {
             humanPlayerBankLabel.setText("");
             humanPlayerBankLabel.setIcon(null);
         } else {
-            humanPlayerBankLabel.setText(bankWithoutMop.size() + " carte");
+            humanPlayerBankLabel.setText(bankWithoutMop.size() + CARDS_STRING);
             humanPlayerBankLabel.setIcon(new ImageIcon(Asset.BACK_ROTATED.getSprite(CARD_HEIGHT, CARD_WIDTH)));
         }
     }
@@ -151,27 +152,27 @@ public class View {
     public void setCpuPlayerBank(List<Card> bankWithoutMop, List<Card> mop) {
         cpuPlayerMopsLabels.clear();
         cpuPlayerMopsPanel.removeAll();
-        for(Card card : mop) {
+        for (Card card : mop) {
             cpuPlayerMopsLabels.add(new JLabel(new ImageIcon(Utils.assetFromCard(card).getSprite(CARD_WIDTH, CARD_HEIGHT))));
         }
-        for(JLabel label : cpuPlayerMopsLabels) {
+        for (JLabel label : cpuPlayerMopsLabels) {
             cpuPlayerMopsPanel.add(label);
         }
 
-        if(bankWithoutMop.isEmpty()) {
+        if (bankWithoutMop.isEmpty()) {
             cpuPlayerBankLabel.setText("");
             cpuPlayerBankLabel.setIcon(null);
         } else {
-            cpuPlayerBankLabel.setText(bankWithoutMop.size() + " carte");
+            cpuPlayerBankLabel.setText(bankWithoutMop.size() + CARDS_STRING);
             cpuPlayerBankLabel.setIcon(new ImageIcon(Asset.BACK_ROTATED.getSprite(CARD_HEIGHT, CARD_WIDTH)));
         }
     }
 
     public void setDeck(Deck deck) {
-        if(deck.size() != 0) {
-            deckLabel.setText(deck.size() + " carte");
+        if (deck.size() != 0) {
+            deckLabel.setText(deck.size() + CARDS_STRING);
             deckLabel.setIcon(new ImageIcon(Asset.BACK_ROTATED.getSprite(CARD_HEIGHT, CARD_WIDTH)));
-        }else{
+        } else {
             deckLabel.setText("Mazzo vuoto");
             deckLabel.setIcon(null);
         }

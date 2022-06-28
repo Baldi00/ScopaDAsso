@@ -66,11 +66,7 @@ public class GameManager {
         boolean done = false;
         if (card.getCardName().equals(CardName.ACE) && cardByNameOccurs(field, CardName.ACE) == 0 && !field.isEmpty()) {
             grabAll(player);
-            if (isLastTurnOfTheGame()) {
-                player.addToBank(card);
-            } else {
-                player.addToMop(card);
-            }
+            addCardToPlayerBankOrMop(player, card);
             done = true;
         }
         if (!done) {
@@ -104,11 +100,7 @@ public class GameManager {
                     if (isTurnOver() && isGameOver()) {
                         player.addToBank(card);
                     } else {
-                        if (isLastTurnOfTheGame()) {
-                            player.addToBank(card);
-                        } else {
-                            player.addToMop(card);
-                        }
+                        addCardToPlayerBankOrMop(player, card);
                     }
                 } else {
                     player.addToBank(card);
@@ -133,11 +125,7 @@ public class GameManager {
             field.removeAll(bestMove);
 
             if (field.isEmpty()) {
-                if (isLastTurnOfTheGame()) {
-                    player.addToBank(card);
-                } else {
-                    player.addToMop(card);
-                }
+                addCardToPlayerBankOrMop(player, card);
             } else {
                 player.addToBank(card);
             }
@@ -402,6 +390,14 @@ public class GameManager {
 
     public boolean isTurnOver() {
         return humanPlayer.getHand().isEmpty() && cpuPlayer.getHand().isEmpty();
+    }
+
+    private void addCardToPlayerBankOrMop(Player player, Card card) {
+        if (isLastTurnOfTheGame()) {
+            player.addToBank(card);
+        } else {
+            player.addToMop(card);
+        }
     }
 
     public boolean isLastTurnOfTheGame() {
