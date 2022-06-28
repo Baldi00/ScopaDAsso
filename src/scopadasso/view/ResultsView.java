@@ -12,72 +12,55 @@ public class ResultsView {
     private static final int CARD_WIDTH = 80;
     private static final int CARD_HEIGHT = 130;
 
-    private final JLabel humanPlayerPointsLabel;
-    private final JLabel cpuPlayerPointsLabel;
-    private final List<JLabel> humanPlayerMopsLabels;
-    private final List<JLabel> cpuPlayerMopsLabels;
-    private final List<JLabel> humanPlayerCardsLabels;
-    private final List<JLabel> cpuPlayerCardsLabels;
-    private final JPanel humanPlayerMopsPanel;
-    private final JPanel cpuPlayerMopsPanel;
-    private final JPanel humanPlayerCardsPanel;
-    private final JPanel cpuPlayerCardsPanel;
+    private final JLabel humanPointsLabel;
+    private final JLabel cpuPointsLabel;
+    private final List<JLabel> humanMopsLabels;
+    private final List<JLabel> cpuMopsLabels;
+    private final List<JLabel> humanCardsLabels;
+    private final List<JLabel> cpuCardsLabels;
+    private final JPanel humanMopsPanel;
+    private final JPanel cpuMopsPanel;
+    private final JPanel humanCardsPanel;
+    private final JPanel cpuCardsPanel;
 
     public ResultsView() {
         //INITIALIZATIONS
         JFrame frame = new JFrame("Risultati");
-        frame.setLayout(new BorderLayout());
-        JPanel mainPanel = new JPanel(new GridLayout(3, 1, 0, 0));
-        JPanel titlesPanel = new JPanel(new BorderLayout());
+        JPanel mainPanel = new JPanel(new GridLayout(2, 1, 0, 0));
         JPanel humanPanel = new JPanel(new BorderLayout());
         JPanel cpuPanel = new JPanel(new BorderLayout());
-        JLabel playerLabel = new JLabel("GIOCATORE");
-        JLabel cardsLabel = new JLabel("CARTE");
-        JLabel mopsLabel = new JLabel("SCOPE");
-        humanPlayerPointsLabel = new JLabel("TU: 0 punti");
-        cpuPlayerPointsLabel = new JLabel("CPU: 0 punti");
-        humanPlayerMopsPanel = new JPanel(new GridLayout(1, 40, 0, 0));
-        cpuPlayerMopsPanel = new JPanel(new GridLayout(1, 40, 0, 0));
-        humanPlayerCardsPanel = new JPanel(new GridLayout(1, 40, 0, 0));
-        cpuPlayerCardsPanel = new JPanel(new GridLayout(1, 40, 0, 0));
+        humanPointsLabel = new JLabel("TU: 0 punti");
+        cpuPointsLabel = new JLabel("CPU: 0 punti");
+        humanMopsPanel = new JPanel(new GridLayout(1, 40, 0, 0));
+        cpuMopsPanel = new JPanel(new GridLayout(1, 40, 0, 0));
+        humanCardsPanel = new JPanel(new GridLayout(1, 40, 0, 0));
+        cpuCardsPanel = new JPanel(new GridLayout(1, 40, 0, 0));
 
-        humanPlayerMopsLabels = new ArrayList<>();
-        cpuPlayerMopsLabels = new ArrayList<>();
-        humanPlayerCardsLabels = new ArrayList<>();
-        cpuPlayerCardsLabels = new ArrayList<>();
+        humanMopsLabels = new ArrayList<>();
+        cpuMopsLabels = new ArrayList<>();
+        humanCardsLabels = new ArrayList<>();
+        cpuCardsLabels = new ArrayList<>();
 
-        humanPlayerCardsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        cpuPlayerCardsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        humanCardsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        cpuCardsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-        humanPlayerPointsLabel.setFont(playerLabel.getFont().deriveFont(15f));
-        cpuPlayerPointsLabel.setFont(playerLabel.getFont().deriveFont(15f));
-
-        playerLabel.setFont(playerLabel.getFont().deriveFont(18f));
-        cardsLabel.setFont(playerLabel.getFont().deriveFont(18f));
-        mopsLabel.setFont(playerLabel.getFont().deriveFont(18f));
-        playerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        cardsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        mopsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        humanPointsLabel.setFont(humanPointsLabel.getFont().deriveFont(20f));
+        cpuPointsLabel.setFont(cpuPointsLabel.getFont().deriveFont(20f));
 
         //ASSEMBLY
 
-        titlesPanel.add(playerLabel, BorderLayout.WEST);
-        titlesPanel.add(cardsLabel, BorderLayout.CENTER);
-        titlesPanel.add(mopsLabel, BorderLayout.EAST);
+        humanPanel.add(humanPointsLabel, BorderLayout.WEST);
+        humanPanel.add(humanMopsPanel, BorderLayout.CENTER);
+        humanPanel.add(humanCardsPanel, BorderLayout.SOUTH);
 
-        humanPanel.add(humanPlayerPointsLabel, BorderLayout.WEST);
-        humanPanel.add(humanPlayerCardsPanel, BorderLayout.CENTER);
-        humanPanel.add(humanPlayerMopsPanel, BorderLayout.EAST);
-
-        cpuPanel.add(cpuPlayerPointsLabel, BorderLayout.WEST);
-        cpuPanel.add(cpuPlayerCardsPanel, BorderLayout.CENTER);
-        cpuPanel.add(cpuPlayerMopsPanel, BorderLayout.EAST);
+        cpuPanel.add(cpuPointsLabel, BorderLayout.WEST);
+        cpuPanel.add(cpuMopsPanel, BorderLayout.CENTER);
+        cpuPanel.add(cpuCardsPanel, BorderLayout.SOUTH);
 
         mainPanel.add(humanPanel);
         mainPanel.add(cpuPanel);
 
-        frame.add(titlesPanel, BorderLayout.NORTH);
-        frame.add(mainPanel, BorderLayout.CENTER);
+        frame.add(mainPanel);
 
         //LAST SETTINGS AND SHOW
         frame.setSize(1366, 768);
@@ -85,67 +68,87 @@ public class ResultsView {
         frame.setVisible(true);
     }
 
-    public void setHumanPlayerPoints(int points, int beautifulKing, int beautifulSeven, int coins, int primiera, int cardsNumber) {
-        humanPlayerPointsLabel.setText("<html>TU: " + points + " punti<br>");
-        if (beautifulKing == 1) humanPlayerPointsLabel.setText(humanPlayerPointsLabel.getText() + "| Re Bello |");
-        if (beautifulSeven == 1) humanPlayerPointsLabel.setText(humanPlayerPointsLabel.getText() + "| Sette Bello |");
-        if (coins == 1) humanPlayerPointsLabel.setText(humanPlayerPointsLabel.getText() + "| Denari |");
-        if (primiera == 1) humanPlayerPointsLabel.setText(humanPlayerPointsLabel.getText() + "| Primiera |");
-        if (cardsNumber == 1) humanPlayerPointsLabel.setText(humanPlayerPointsLabel.getText() + "| Carte |");
-        humanPlayerPointsLabel.setText(humanPlayerPointsLabel.getText() + "</html>");
+    public void setHumanPoints(int points, int beautifulKing, int beautifulSeven, int coins, int primiera, int cardsNumber, List<Card> mop, List<Integer> additional) {
+        humanPointsLabel.setText("<html>TU: " + points + " punti<br>");
+        if (beautifulKing == 1) humanPointsLabel.setText(humanPointsLabel.getText() + "| Re Bello |");
+        if (beautifulSeven == 1) humanPointsLabel.setText(humanPointsLabel.getText() + "| Sette Bello |");
+        if (coins == 1) humanPointsLabel.setText(humanPointsLabel.getText() + "| Denari |");
+        if (primiera == 1) humanPointsLabel.setText(humanPointsLabel.getText() + "| Primiera |");
+        if (cardsNumber == 1) humanPointsLabel.setText(humanPointsLabel.getText() + "| Carte |");
+
+        humanPointsLabel.setText(humanPointsLabel.getText() + "<br>" + mop.size() + " scope");
+
+        if(!additional.isEmpty()) {
+            humanPointsLabel.setText(humanPointsLabel.getText() + "<br>Cusa: ");
+            for (Integer i : additional) {
+                humanPointsLabel.setText(humanPointsLabel.getText() + i + " ");
+            }
+        }
+
+        humanPointsLabel.setText(humanPointsLabel.getText() + "</html>");
     }
 
-    public void setCpuPlayerPoints(int points, int beautifulKing, int beautifulSeven, int coins, int primiera, int cardsNumber) {
-        cpuPlayerPointsLabel.setText("<html>CPU: " + points + " punti<br>");
-        if (beautifulKing == 1) cpuPlayerPointsLabel.setText(cpuPlayerPointsLabel.getText() + "| Re Bello |");
-        if (beautifulSeven == 1) cpuPlayerPointsLabel.setText(cpuPlayerPointsLabel.getText() + "| Sette Bello |");
-        if (coins == 1) cpuPlayerPointsLabel.setText(cpuPlayerPointsLabel.getText() + "| Denari |");
-        if (primiera == 1) cpuPlayerPointsLabel.setText(cpuPlayerPointsLabel.getText() + "| Primiera |");
-        if (cardsNumber == 1) cpuPlayerPointsLabel.setText(cpuPlayerPointsLabel.getText() + "| Carte |");
-        cpuPlayerPointsLabel.setText(cpuPlayerPointsLabel.getText() + "</html>");
+    public void setCpuPoints(int points, int beautifulKing, int beautifulSeven, int coins, int primiera, int cardsNumber, List<Card> mop, List<Integer> additional) {
+        cpuPointsLabel.setText("<html>CPU: " + points + " punti<br>");
+        if (beautifulKing == 1) cpuPointsLabel.setText(cpuPointsLabel.getText() + "| Re Bello |");
+        if (beautifulSeven == 1) cpuPointsLabel.setText(cpuPointsLabel.getText() + "| Sette Bello |");
+        if (coins == 1) cpuPointsLabel.setText(cpuPointsLabel.getText() + "| Denari |");
+        if (primiera == 1) cpuPointsLabel.setText(cpuPointsLabel.getText() + "| Primiera |");
+        if (cardsNumber == 1) cpuPointsLabel.setText(cpuPointsLabel.getText() + "| Carte |");
+
+        cpuPointsLabel.setText(cpuPointsLabel.getText() + "<br>" + mop.size() + " scope");
+
+        if(!additional.isEmpty()) {
+            cpuPointsLabel.setText(cpuPointsLabel.getText() + "<br>Cusa: ");
+            for (Integer i : additional) {
+                cpuPointsLabel.setText(cpuPointsLabel.getText() + i + " ");
+            }
+        }
+
+        cpuPointsLabel.setText(cpuPointsLabel.getText() + "</html>");
     }
 
-    public void setHumanPlayerCards(List<Card> cards) {
-        humanPlayerCardsLabels.clear();
-        humanPlayerCardsPanel.removeAll();
+    public void setHumanCards(List<Card> cards) {
+        humanCardsLabels.clear();
+        humanCardsPanel.removeAll();
         for (Card card : cards) {
-            humanPlayerCardsLabels.add(new JLabel(new ImageIcon(Utils.assetFromCard(card).getSprite(CARD_WIDTH, CARD_HEIGHT))));
+            humanCardsLabels.add(new JLabel(new ImageIcon(Utils.assetFromCard(card).getSprite(CARD_WIDTH, CARD_HEIGHT))));
         }
-        for (JLabel label : humanPlayerCardsLabels) {
-            humanPlayerCardsPanel.add(label);
-        }
-    }
-
-    public void setCpuPlayerCards(List<Card> cards) {
-        cpuPlayerCardsLabels.clear();
-        cpuPlayerCardsPanel.removeAll();
-        for (Card card : cards) {
-            cpuPlayerCardsLabels.add(new JLabel(new ImageIcon(Utils.assetFromCard(card).getSprite(CARD_WIDTH, CARD_HEIGHT))));
-        }
-        for (JLabel label : cpuPlayerCardsLabels) {
-            cpuPlayerCardsPanel.add(label);
+        for (JLabel label : humanCardsLabels) {
+            humanCardsPanel.add(label);
         }
     }
 
-    public void setHumanPlayerMops(List<Card> cards) {
-        humanPlayerMopsLabels.clear();
-        humanPlayerMopsPanel.removeAll();
+    public void setCpuCards(List<Card> cards) {
+        cpuCardsLabels.clear();
+        cpuCardsPanel.removeAll();
         for (Card card : cards) {
-            humanPlayerMopsLabels.add(new JLabel(new ImageIcon(Utils.assetFromCard(card).getSprite(CARD_WIDTH, CARD_HEIGHT))));
+            cpuCardsLabels.add(new JLabel(new ImageIcon(Utils.assetFromCard(card).getSprite(CARD_WIDTH, CARD_HEIGHT))));
         }
-        for (JLabel label : humanPlayerMopsLabels) {
-            humanPlayerMopsPanel.add(label);
+        for (JLabel label : cpuCardsLabels) {
+            cpuCardsPanel.add(label);
         }
     }
 
-    public void setCpuPlayerMops(List<Card> cards) {
-        cpuPlayerMopsLabels.clear();
-        cpuPlayerMopsPanel.removeAll();
+    public void setHumanMops(List<Card> cards) {
+        humanMopsLabels.clear();
+        humanMopsPanel.removeAll();
         for (Card card : cards) {
-            cpuPlayerMopsLabels.add(new JLabel(new ImageIcon(Utils.assetFromCard(card).getSprite(CARD_WIDTH, CARD_HEIGHT))));
+            humanMopsLabels.add(new JLabel(new ImageIcon(Utils.assetFromCard(card).getSprite(CARD_WIDTH, CARD_HEIGHT))));
         }
-        for (JLabel label : cpuPlayerMopsLabels) {
-            cpuPlayerMopsPanel.add(label);
+        for (JLabel label : humanMopsLabels) {
+            humanMopsPanel.add(label);
+        }
+    }
+
+    public void setCpuMops(List<Card> cards) {
+        cpuMopsLabels.clear();
+        cpuMopsPanel.removeAll();
+        for (Card card : cards) {
+            cpuMopsLabels.add(new JLabel(new ImageIcon(Utils.assetFromCard(card).getSprite(CARD_WIDTH, CARD_HEIGHT))));
+        }
+        for (JLabel label : cpuMopsLabels) {
+            cpuMopsPanel.add(label);
         }
     }
 }

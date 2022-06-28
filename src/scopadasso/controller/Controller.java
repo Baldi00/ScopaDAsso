@@ -58,24 +58,28 @@ public class Controller {
         ResultsView resultsView = new ResultsView();
         Player humanPlayer = gameManager.getHumanPlayer();
         Player cpuPlayer = gameManager.getCpuPlayer();
-        resultsView.setHumanPlayerPoints(
+        resultsView.setHumanPoints(
                 humanPlayer.getRoundPoints(),
                 humanPlayer.getBank().searchForBeautifulKing(),
                 humanPlayer.getBank().searchForBeautifulSeven(),
                 humanPlayer.getBank().searchForCoinsMajority(),
                 humanPlayer.getBank().searchForPrimiera(),
-                humanPlayer.getBank().searchForCardsNumberMajority());
-        resultsView.setHumanPlayerCards(humanPlayer.getBankWithoutMop());
-        resultsView.setHumanPlayerMops(humanPlayer.getMop());
-        resultsView.setCpuPlayerPoints(
+                humanPlayer.getBank().searchForCardsNumberMajority(),
+                humanPlayer.getMop(),
+                humanPlayer.getAdditionalPoints());
+        resultsView.setHumanCards(humanPlayer.getBankWithoutMop());
+        resultsView.setHumanMops(humanPlayer.getMop());
+        resultsView.setCpuPoints(
                 cpuPlayer.getRoundPoints(),
                 cpuPlayer.getBank().searchForBeautifulKing(),
                 cpuPlayer.getBank().searchForBeautifulSeven(),
                 cpuPlayer.getBank().searchForCoinsMajority(),
                 cpuPlayer.getBank().searchForPrimiera(),
-                cpuPlayer.getBank().searchForCardsNumberMajority());
-        resultsView.setCpuPlayerCards(cpuPlayer.getBankWithoutMop());
-        resultsView.setCpuPlayerMops(cpuPlayer.getMop());
+                cpuPlayer.getBank().searchForCardsNumberMajority(),
+                cpuPlayer.getMop(),
+                cpuPlayer.getAdditionalPoints());
+        resultsView.setCpuCards(cpuPlayer.getBankWithoutMop());
+        resultsView.setCpuMops(cpuPlayer.getMop());
     }
 
     public void setActionButton(String name, String text, boolean enabled){
