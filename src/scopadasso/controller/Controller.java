@@ -23,7 +23,7 @@ public class Controller {
     public void updateView() {
         view.setHumanPlayerCards(gameManager.getHumanPlayer().getHand());
         view.setHumanPlayerBank(gameManager.getHumanPlayer().getBankWithoutMop(), gameManager.getHumanPlayer().getMop());
-        view.setCpuPlayerCards(gameManager.getCpuPlayer().getHand(), gameManager.getCpuPlayer().getLastPlayedCard());
+        view.setCpuPlayerCards(gameManager.getCpuPlayer().getHand(), gameManager.getCpuPlayer().getLastPlayedCard(), gameManager.hasCpuPlayedCard());
         view.setCpuPlayerBank(gameManager.getCpuPlayer().getBankWithoutMop(), gameManager.getCpuPlayer().getMop());
         view.setDeck(gameManager.getDeck());
         view.setField(gameManager.getField());

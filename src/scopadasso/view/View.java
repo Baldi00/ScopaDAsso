@@ -95,7 +95,7 @@ public class View {
         humanPlayerBankLabel.setText(bankWithoutMop.size() + " carte e " + mop.size() + " scope");
     }
 
-    public void setCpuPlayerCards(List<Card> hand, Card lastPlayedCard) {
+    public void setCpuPlayerCards(List<Card> hand, Card lastPlayedCard, boolean hasCpuPlayedCard) {
         for (int i = 0; i < 3; i++) {
             cpuPlayerCardsLabels[i].setIcon(null);
         }
@@ -103,7 +103,7 @@ public class View {
             cpuPlayerCardsLabels[i].setIcon(new ImageIcon(Asset.BACK.getSprite(CARD_WIDTH, CARD_HEIGHT)));
         }
 
-        if(lastPlayedCard != null) {
+        if(hasCpuPlayedCard) {
             cpuPlayerCardsLabels[hand.size()].setIcon(new ImageIcon(Utils.assetFromCard(lastPlayedCard).getSprite(CARD_WIDTH, CARD_HEIGHT)));
             confirmCpuActionButton.setEnabled(true);
         }else{

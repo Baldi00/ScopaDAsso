@@ -9,12 +9,14 @@ public class GameManager {
     private Player cpuPlayer;
     private List<Card> field;
     private Deck deck;
+    private boolean hasCpuPlayedCard;
 
     public GameManager() {
         humanPlayer = new Player(0);
         cpuPlayer = new Player(1);
         field = new ArrayList<>();
         deck = new Deck();
+        hasCpuPlayedCard = false;
     }
 
     public void preparation() {
@@ -84,6 +86,7 @@ public class GameManager {
         if(!cpuPlayer.getHand().isEmpty()){
             Card cpuPlayedCard = cpuPlayer.getHand().get(0);
             cpuPlayer.playCard(cpuPlayedCard);
+            hasCpuPlayedCard = true;
         }
     }
 
@@ -106,6 +109,8 @@ public class GameManager {
         if(!done) {
             placeCardOnField(card);
         }
+
+        hasCpuPlayedCard = false;
     }
 
     private boolean searchAndGrabSingleCard(Player player, Card card) {
@@ -215,5 +220,9 @@ public class GameManager {
         if (humanPlayer.getHand().isEmpty() && cpuPlayer.getHand().isEmpty()){
             giveThreeCardsToPlayers();
         }
+    }
+
+    public boolean hasCpuPlayedCard() {
+        return hasCpuPlayedCard;
     }
 }

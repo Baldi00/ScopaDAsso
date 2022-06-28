@@ -61,7 +61,4 @@ public class Player {
         return lastPlayedCard;
     }
 
-    public void resetLastPlayedCard() {
-        lastPlayedCard = null;
-    }
 }

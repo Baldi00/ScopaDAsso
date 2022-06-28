@@ -19,9 +19,11 @@ public class CardClickListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        gameManager.humanPlayerPlayCard(card);
-        gameManager.cpuPlayerPlayCard();
-        controller.updateView();
+        if(!gameManager.hasCpuPlayedCard()) {
+            gameManager.humanPlayerPlayCard(card);
+            gameManager.cpuPlayerPlayCard();
+            controller.updateView();
+        }
     }
 
     @Override
