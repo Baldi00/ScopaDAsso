@@ -26,6 +26,7 @@ public class GameManager {
         deck.shuffleDeck();
         prepareField();
         giveThreeCardsToPlayers();
+        calculateAdditionalPointsFor(humanPlayer);
     }
 
     private void prepareField() {
@@ -230,7 +231,7 @@ public class GameManager {
             if (card.getCardName().equals(CardName.ACE)) {
                 points.put(card, points.get(card) - 10);
             }
-            if (getFieldValue() + card.getCardName().getValue() <= 10) {
+            if (getTotalValueOf(field) + card.getCardName().getValue() <= 10) {
                 points.put(card, points.get(card) - 3);
             }
             if (card.getCardName().equals(CardName.SEVEN) ||
@@ -262,7 +263,7 @@ public class GameManager {
     }
 
     private void calculatePlayerPoints(Player player) {
-        player.setPoints(player.getBank().getResultPoints());
+        player.setPoints(player.getBank().getResultPoints() + player.getTotalAdditionalPoints());
     }
 
     // UTILS
@@ -270,7 +271,7 @@ public class GameManager {
     private int calculateGroupOfCardsPoints(List<Card> cards) {
         int points = 0;
 
-        // Scopa
+        // Mop
         if (cards.containsAll(field)) {
             points += 10;
         }
@@ -380,9 +381,9 @@ public class GameManager {
         return counter;
     }
 
-    private int getFieldValue() {
+    private int getTotalValueOf(List<Card> cards) {
         int sum = 0;
-        for (Card card : field) {
+        for (Card card : cards) {
             sum += card.cardName().getValue();
         }
         return sum;
@@ -402,6 +403,24 @@ public class GameManager {
 
     public boolean isLastTurnOfTheGame() {
         return isTurnOver() && isGameOver();
+    }
+
+    public void calculateAdditionalPointsFor(Player player) {
+        List<Card> hand = player.getHand();
+        if(hand.size() == 3) {
+            if(hand.get(0).cardName().equals(hand.get(1).getCardName()) &&
+                    hand.get(1).cardName().equals(hand.get(2).getCardName())){
+                player.addAdditionalPoints(7);
+            } else if (getTotalValueOf(hand) < 10) {
+                if (hand.get(0).cardName().equals(hand.get(1).getCardName()) ||
+                        hand.get(1).cardName().equals(hand.get(2).getCardName()) ||
+                        hand.get(0).cardName().equals(hand.get(2).getCardName())) {
+                    player.addAdditionalPoints(3);
+                } else {
+                    player.addAdditionalPoints(2);
+                }
+            }
+        }
     }
 
     // GETTERS

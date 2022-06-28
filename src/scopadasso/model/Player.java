@@ -6,12 +6,14 @@ import java.util.List;
 public class Player {
     private final List<Card> hand;
     private final Bank bank;
+    private final List<Integer> additionalPoints;
     private Card lastPlayedCard;
     private int points;
 
     public Player() {
         hand = new ArrayList<>();
         bank = new Bank();
+        additionalPoints = new ArrayList<>();
         points = 0;
     }
 
@@ -69,5 +71,21 @@ public class Player {
 
     public Bank getBank() {
         return bank;
+    }
+
+    public List<Integer> getAdditionalPoints() {
+        return additionalPoints;
+    }
+
+    public void addAdditionalPoints(int points) {
+        additionalPoints.add(points);
+    }
+
+    public int getTotalAdditionalPoints() {
+        int sum = 0;
+        for(Integer i : additionalPoints){
+            sum += i;
+        }
+        return sum;
     }
 }
