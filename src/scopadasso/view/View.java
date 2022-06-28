@@ -40,8 +40,6 @@ public class View {
         JPanel cpuPanel = new JPanel(new GridLayout(3, 1, 0, 0));
         JPanel humanCardsPanel = new JPanel(new BorderLayout());
         JPanel cpuCardsPanel = new JPanel(new BorderLayout());
-        JPanel humanBankPanel = new JPanel(new GridLayout(2, 1, 0, 0));
-        JPanel cpuBankPanel = new JPanel(new GridLayout(2, 1, 0, 0));
         humanMopsPanel = new JPanel(new GridLayout(1, 20, 0, 0));
         cpuMopsPanel = new JPanel(new GridLayout(1, 20, 0, 0));
         actionButton = new JButton("Prosegui");
@@ -76,6 +74,8 @@ public class View {
             humanCardsPanel.add(humanCardsLabels[i], coordinates[i]);
             cpuCardsPanel.add(cpuCardsLabels[i], coordinates[i]);
         }
+        humanCardsPanel.add(humanAdditionalPointsLabel, BorderLayout.SOUTH);
+        cpuCardsPanel.add(cpuAdditionalPointsLabel, BorderLayout.SOUTH);
 
         humanMopsPanel.setPreferredSize(new Dimension(300, 500));
         cpuMopsPanel.setPreferredSize(new Dimension(300, 500));
@@ -109,17 +109,12 @@ public class View {
         fieldPanel.add(fieldCardPanel, BorderLayout.CENTER);
         fieldPanel.add(deckLabel, BorderLayout.SOUTH);
 
-        humanBankPanel.add(humanBankLabel);
-        humanBankPanel.add(humanAdditionalPointsLabel);
-        cpuBankPanel.add(cpuBankLabel);
-        cpuBankPanel.add(cpuAdditionalPointsLabel);
-
         humanPanel.add(humanCardsPanel);
         humanPanel.add(humanMopsPanel);
-        humanPanel.add(humanBankPanel);
+        humanPanel.add(humanBankLabel);
         cpuPanel.add(cpuCardsPanel);
         cpuPanel.add(cpuMopsPanel);
-        cpuPanel.add(cpuBankPanel);
+        cpuPanel.add(cpuBankLabel);
 
         mainPanel.add(humanPanel, BorderLayout.WEST);
         mainPanel.add(fieldPanel, BorderLayout.CENTER);
