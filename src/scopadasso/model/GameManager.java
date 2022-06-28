@@ -8,6 +8,7 @@ public class GameManager {
     private List<Card> field;
     private Deck deck;
     private boolean hasCpuPlayedCard;
+    private Player lastPlayerWhoPickedCards;
 
     public GameManager() {
         setup();
@@ -76,6 +77,8 @@ public class GameManager {
         }
         if (!done) {
             placeCardOnField(card);
+        } else {
+            lastPlayerWhoPickedCards = player;
         }
 
         hasCpuPlayedCard = false;
@@ -237,6 +240,17 @@ public class GameManager {
         }
     }
 
+    // GAME OVER AND MATCH RESULTS
+
+    public boolean isGameOver() {
+        return deck.size() == 0;
+    }
+
+    public void giveLastFieldCardsToLastPlayerWhoPicked() {
+        for (Card card : field)
+            lastPlayerWhoPickedCards.addToBank(card);
+        field.clear();
+    }
     // UTILS
 
     private int calculateGroupOfCardsPoints(List<Card> cards) {
@@ -360,10 +374,8 @@ public class GameManager {
         return sum;
     }
 
-    public void checkIfTurnOverAndRefillCards() {
-        if (humanPlayer.getHand().isEmpty() && cpuPlayer.getHand().isEmpty()) {
-            giveThreeCardsToPlayers();
-        }
+    public boolean isTurnOver() {
+        return humanPlayer.getHand().isEmpty() && cpuPlayer.getHand().isEmpty();
     }
 
     // GETTERS

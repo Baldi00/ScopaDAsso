@@ -17,7 +17,15 @@ public class ConfirmCpuActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         gameManager.executeMove(gameManager.getCpuPlayer(), gameManager.getCpuPlayer().getLastPlayedCard());
-        gameManager.checkIfTurnOverAndRefillCards();
+
+        if(gameManager.isTurnOver()) {
+            if (gameManager.isGameOver()) {
+                gameManager.giveLastFieldCardsToLastPlayerWhoPicked();
+            } else {
+                gameManager.giveThreeCardsToPlayers();
+            }
+        }
+
         controller.updateView();
     }
 }
