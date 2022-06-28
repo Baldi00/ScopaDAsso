@@ -1,6 +1,5 @@
 package scopadasso.controller;
 
-import scopadasso.model.Card;
 import scopadasso.model.GameManager;
 
 import java.awt.event.ActionEvent;

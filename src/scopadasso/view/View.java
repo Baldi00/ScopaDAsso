@@ -8,11 +8,10 @@ import java.awt.*;
 import java.util.List;
 
 public class View {
-    private final JFrame frame;
-    private final JPanel mainPanel;
-    private final JPanel fieldPanel;
-    private final JPanel humanPlayerPanel;
-    private final JPanel cpuPlayerPanel;
+
+    private static final int CARD_WIDTH = 150;
+    private static final int CARD_HEIGHT = 250;
+
     private final JLabel[] humanPlayerCardsLabels;
     private final JLabel[] cpuPlayerCardsLabels;
     private final JLabel[] fieldLabels;
@@ -21,16 +20,13 @@ public class View {
     private final JLabel cpuPlayerBankLabel;
     private final JButton confirmCpuActionButton;
 
-    private final static int CARD_WIDTH = 150;
-    private final static int CARD_HEIGHT = 250;
-
     public View() {
         //INITIALIZATIONS
-        frame = new JFrame("Scopa d'Asso");
-        mainPanel = new JPanel(new BorderLayout());
-        fieldPanel = new JPanel(new GridLayout(2, 4, 3, 3));
-        humanPlayerPanel = new JPanel(new GridLayout(2, 3, 3, 3));
-        cpuPlayerPanel = new JPanel(new GridLayout(2, 3, 3, 3));
+        JFrame frame = new JFrame("Scopa d'Asso");
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        JPanel fieldPanel = new JPanel(new GridLayout(2, 4, 3, 3));
+        JPanel humanPlayerPanel = new JPanel(new GridLayout(2, 3, 3, 3));
+        JPanel cpuPlayerPanel = new JPanel(new GridLayout(2, 3, 3, 3));
         confirmCpuActionButton = new JButton("Prosegui");
 
         confirmCpuActionButton.setEnabled(false);
@@ -103,10 +99,10 @@ public class View {
             cpuPlayerCardsLabels[i].setIcon(new ImageIcon(Asset.BACK.getSprite(CARD_WIDTH, CARD_HEIGHT)));
         }
 
-        if(hasCpuPlayedCard) {
+        if (hasCpuPlayedCard) {
             cpuPlayerCardsLabels[hand.size()].setIcon(new ImageIcon(Utils.assetFromCard(lastPlayedCard).getSprite(CARD_WIDTH, CARD_HEIGHT)));
             confirmCpuActionButton.setEnabled(true);
-        }else{
+        } else {
             confirmCpuActionButton.setEnabled(false);
         }
     }

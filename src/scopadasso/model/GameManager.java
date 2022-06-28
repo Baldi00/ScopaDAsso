@@ -27,7 +27,7 @@ public class GameManager {
         for (int i = 0; i < 4; i++)
             field.add(deck.extract());
 
-        if(cardByNameOccurs(field, CardName.ACE) > 1){
+        if (cardByNameOccurs(field, CardName.ACE) > 1) {
             reinitialize();
             preparation();
         }
@@ -40,24 +40,6 @@ public class GameManager {
         deck = new Deck();
     }
 
-    private int cardByNameOccurs(List<Card> cards, CardName cardName) {
-        int counter = 0;
-        for (Seed seed : Seed.values()) {
-            if (cards.contains(new Card(cardName, seed)))
-                counter++;
-        }
-        return counter;
-    }
-
-    private int cardBySeedOccurs(List<Card> cards, Seed seed) {
-        int counter = 0;
-        for (CardName cardName : CardName.values()) {
-            if (cards.contains(new Card(cardName, seed)))
-                counter++;
-        }
-        return counter;
-    }
-
     public void giveThreeCardsToPlayers() {
         for (int i = 0; i < 3; i++) {
             humanPlayer.receiveCard(deck.extract());
@@ -65,24 +47,10 @@ public class GameManager {
         }
     }
 
-    public Player getHumanPlayer() {
-        return humanPlayer;
-    }
-
-    public Player getCpuPlayer() {
-        return cpuPlayer;
-    }
-
-    public Deck getDeck() {
-        return deck;
-    }
-
-    public List<Card> getField() {
-        return field;
-    }
+    // CARD PLAY
 
     public void humanPlayerPlayCard(Card card) {
-        if(!humanPlayer.getHand().isEmpty()) {
+        if (!humanPlayer.getHand().isEmpty()) {
             humanPlayer.playCard(card);
             executeMove(humanPlayer, card);
         }
@@ -90,100 +58,39 @@ public class GameManager {
 
     public void cpuPlayerPlayCard() {
         Card bestCardToPlay = selectBestCardToPlay(cpuPlayer.getHand());
-        if(!cpuPlayer.getHand().isEmpty()){
+        if (!cpuPlayer.getHand().isEmpty()) {
             cpuPlayer.playCard(bestCardToPlay);
             hasCpuPlayedCard = true;
         }
     }
 
-    private Card selectBestCardToPlay(List<Card> hand) {
-        Map<Card, Integer> points = new HashMap<>();
-
-        for (Card card : hand){
-            points.put(card, 0);
-            if(card.getCardName().equals(CardName.ACE) && cardByNameOccurs(field, CardName.ACE) == 0 && !field.isEmpty()){
-                points.put(card, 10+ field.size());
-            }
-        }
-
-        for (Card card : hand) {
-            for (Card card1 : field) {
-                if (card.getCardName().equals(card1.getCardName()) && points.get(card) == 0) {
-                    List<Card> move = new ArrayList<>();
-                    move.add(card);
-                    move.add(card1);
-                    points.put(card, calculateGroupOfCardsPoints(move));
-                }
-            }
-        }
-
-        for(Card card : hand) {
-            List<List<Card>> possibleCardsToGrab = searchForPossibleCardsToGrab(card);
-            if(!possibleCardsToGrab.isEmpty() && points.get(card) == 0){
-                List<Card> bestMove = selectBestGroupOfCards(possibleCardsToGrab, card);
-                if(bestMove != null) {
-                    bestMove.add(card);
-                    int point = calculateGroupOfCardsPoints(bestMove);
-                    points.put(card, point);
-                }
-            }
-        }
-
-        int zeroCounter = 0;
-        for (Map.Entry<Card, Integer> entry : points.entrySet()){
-            if(entry.getValue() == 0){
-                zeroCounter++;
-            }
-        }
-        if (zeroCounter == points.size()){
-            calculateLeastWorseCardToPlay(hand, points);
-        }
-
-        return cardWithMaxPoints(points);
-    }
-
-    private void calculateLeastWorseCardToPlay(List<Card> hand, Map<Card, Integer> points) {
-        for(Card card : hand){
-            if(getFieldValue()+card.getCardName().getValue() <= 10){
-                points.put(card, points.get(card)-3);
-            }
-            if(card.getCardName().equals(CardName.SEVEN) ||
-                    card.getCardName().equals(CardName.SIX) ||
-                    card.getCardName().equals(CardName.KING)){
-                points.put(card, points.get(card)-1);
-            }
-            if(card.getSeed().equals(Seed.MONEY)){
-                points.put(card, points.get(card)-1);
-            }
-        }
-    }
-
-    private int getFieldValue() {
-        int sum = 0;
-        for(Card card : field){
-            sum += card.cardName().getValue();
-        }
-        return sum;
-    }
-
     public void executeMove(Player player, Card card) {
         boolean done = false;
-        if(card.getCardName().equals(CardName.ACE) && cardByNameOccurs(field, CardName.ACE) == 0 && !field.isEmpty()){
+        if (card.getCardName().equals(CardName.ACE) && cardByNameOccurs(field, CardName.ACE) == 0 && !field.isEmpty()) {
             grabAll(player);
             player.addToMop(card);
             done = true;
         }
-        if(!done) {
+        if (!done) {
             done = searchAndGrabSingleCard(player, card);
         }
         if (!done) {
             done = searchAndGrabMultipleCards(player, card);
         }
-        if(!done) {
+        if (!done) {
             placeCardOnField(card);
         }
 
         hasCpuPlayedCard = false;
+    }
+
+    // MOVE TO PERFORM
+
+    private void grabAll(Player player) {
+        for (Card card1 : field) {
+            player.addToBank(card1);
+        }
+        field.clear();
     }
 
     private boolean searchAndGrabSingleCard(Player player, Card card) {
@@ -202,17 +109,10 @@ public class GameManager {
         return false;
     }
 
-    private void grabAll(Player player) {
-        for (Card card1 : field) {
-            player.addToBank(card1);
-        }
-        field.clear();
-    }
-
     private boolean searchAndGrabMultipleCards(Player player, Card card) {
         List<List<Card>> possibleCardsToGrab = searchForPossibleCardsToGrab(card);
 
-        if(!possibleCardsToGrab.isEmpty()) {
+        if (!possibleCardsToGrab.isEmpty()) {
             List<Card> bestMove = selectBestGroupOfCards(possibleCardsToGrab, card);
             for (Card card1 : bestMove) {
                 player.addToBank(card1);
@@ -220,14 +120,145 @@ public class GameManager {
 
             field.removeAll(bestMove);
 
-            if(field.isEmpty()){
+            if (field.isEmpty()) {
                 player.addToMop(card);
-            }else{
+            } else {
                 player.addToBank(card);
             }
             return true;
         }
         return false;
+    }
+
+    private List<Card> selectBestGroupOfCards(List<List<Card>> listOfGroups, Card card) {
+        Map<List<Card>, Integer> points = new HashMap<>();
+        for (List<Card> group : listOfGroups) {
+            group.add(card);
+            int groupPoints = calculateGroupOfCardsPoints(group);
+            group.remove(card);
+            points.put(group, groupPoints);
+        }
+        return groupWithMaxPoints(points);
+    }
+
+    private int calculateValueOfCards(List<Card> cards) {
+        int counter = 0;
+        for (Card card : cards) {
+            counter += card.getCardName().getValue();
+        }
+        return counter;
+    }
+
+    private void placeCardOnField(Card card) {
+        field.add(card);
+    }
+
+    // CPU CARD SELECTION
+
+    private Card selectBestCardToPlay(List<Card> hand) {
+        Map<Card, Integer> points = new HashMap<>();
+        initializePointsMap(hand, points);
+        calculatePointsForAceCards(hand, points);
+        calculatePointsForSingleCards(hand, points);
+        calculatePointsForMultipleCards(hand, points);
+
+        if (areAllZeroPoints(points)) {
+            calculateLeastWorseCardToPlay(hand, points);
+        }
+
+        return cardWithMaxPoints(points);
+    }
+
+    private void initializePointsMap(List<Card> hand, Map<Card, Integer> points) {
+        for (Card card : hand) {
+            points.put(card, 0);
+        }
+    }
+
+    private void calculatePointsForAceCards(List<Card> hand, Map<Card, Integer> points) {
+        for (Card card : hand) {
+            points.put(card, 0);
+            if (card.getCardName().equals(CardName.ACE) && cardByNameOccurs(field, CardName.ACE) == 0 && !field.isEmpty()) {
+                points.put(card, 10 + field.size());
+            }
+        }
+    }
+
+    private void calculatePointsForSingleCards(List<Card> hand, Map<Card, Integer> points) {
+        for (Card card : hand) {
+            for (Card card1 : field) {
+                if (card.getCardName().equals(card1.getCardName()) && points.get(card) == 0) {
+                    List<Card> move = new ArrayList<>();
+                    move.add(card);
+                    move.add(card1);
+                    points.put(card, calculateGroupOfCardsPoints(move));
+                }
+            }
+        }
+    }
+
+    private void calculatePointsForMultipleCards(List<Card> hand, Map<Card, Integer> points) {
+        for (Card card : hand) {
+            List<List<Card>> possibleCardsToGrab = searchForPossibleCardsToGrab(card);
+            if (!possibleCardsToGrab.isEmpty() && points.get(card) == 0) {
+                List<Card> bestMove = selectBestGroupOfCards(possibleCardsToGrab, card);
+                if (bestMove != null) {
+                    bestMove.add(card);
+                    int point = calculateGroupOfCardsPoints(bestMove);
+                    points.put(card, point);
+                }
+            }
+        }
+    }
+
+    private boolean areAllZeroPoints(Map<Card, Integer> points) {
+        int zeroCounter = 0;
+        for (Map.Entry<Card, Integer> entry : points.entrySet()) {
+            if (entry.getValue() == 0) {
+                zeroCounter++;
+            }
+        }
+        return zeroCounter == points.size();
+    }
+
+    private void calculateLeastWorseCardToPlay(List<Card> hand, Map<Card, Integer> points) {
+        for (Card card : hand) {
+            if (getFieldValue() + card.getCardName().getValue() <= 10) {
+                points.put(card, points.get(card) - 3);
+            }
+            if (card.getCardName().equals(CardName.SEVEN) ||
+                    card.getCardName().equals(CardName.SIX) ||
+                    card.getCardName().equals(CardName.KING)) {
+                points.put(card, points.get(card) - 1);
+            }
+            if (card.getSeed().equals(Seed.MONEY)) {
+                points.put(card, points.get(card) - 1);
+            }
+        }
+    }
+
+    // UTILS
+
+    private int calculateGroupOfCardsPoints(List<Card> cards) {
+        int points = 0;
+
+        // Scopa
+        if (cards.containsAll(field)) {
+            points += 10;
+        }
+
+        if (cards.contains(new Card(CardName.SEVEN, Seed.MONEY))) {
+            points += 10;
+        }
+        if (cards.contains(new Card(CardName.KING, Seed.MONEY))) {
+            points += 10;
+        }
+        points += 4 * cardByNameOccurs(cards, CardName.SEVEN);
+        points += 3 * cardByNameOccurs(cards, CardName.SIX);
+        points += 2 * cardBySeedOccurs(cards, Seed.MONEY);
+        points += cards.size();
+
+        return points;
     }
 
     private List<List<Card>> searchForPossibleCardsToGrab(Card card) {
@@ -241,8 +272,21 @@ public class GameManager {
         return permutations;
     }
 
-    private void placeCardOnField(Card card){
-        field.add(card);
+    private void createPermutation(List<List<Card>> result, List<Card> partial, List<Card> available, int length, int cardValue) {
+        if (partial.size() == length) {
+            if (calculateValueOfCards(partial) == cardValue)
+                result.add(partial);
+            return;
+        }
+        for (Card card : available) {
+            List<Card> partial2 = new ArrayList<>(partial);
+            partial2.add(card);
+            if (calculateValueOfCards(partial2) <= cardValue) {
+                List<Card> available2 = new ArrayList<>(available);
+                available2.remove(card);
+                createPermutation(result, partial2, available2, length, cardValue);
+            }
+        }
     }
 
     private void deleteDuplications(List<List<Card>> permutations) {
@@ -264,77 +308,12 @@ public class GameManager {
         }
     }
 
-    private void createPermutation(List<List<Card>> result, List<Card> partial, List<Card> available, int length, int cardValue) {
-        if (partial.size() == length) {
-            if (calculateValueOfCards(partial) == cardValue)
-                result.add(partial);
-            return;
-        }
-        for (Card card : available) {
-            List<Card> partial2 = new ArrayList<>(partial);
-            partial2.add(card);
-            if (calculateValueOfCards(partial2) <= cardValue) {
-                List<Card> available2 = new ArrayList<>(available);
-                available2.remove(card);
-                createPermutation(result, partial2, available2, length, cardValue);
-            }
-        }
-    }
-
-    private int calculateValueOfCards(List<Card> cards) {
-        int counter = 0;
-        for (Card card : cards) {
-            counter += card.getCardName().getValue();
-        }
-        return counter;
-    }
-
-    public void checkIfTurnOverAndRefillCards() {
-        if (humanPlayer.getHand().isEmpty() && cpuPlayer.getHand().isEmpty()){
-            giveThreeCardsToPlayers();
-        }
-    }
-
-
-    private List<Card> selectBestGroupOfCards(List<List<Card>> listOfGroups, Card card){
-        Map<List<Card>, Integer> points = new HashMap<>();
-        for(List<Card> group : listOfGroups) {
-            group.add(card);
-            int groupPoints = calculateGroupOfCardsPoints(group);
-            group.remove(card);
-            points.put(group, groupPoints);
-        }
-        return groupWithMaxPoints(points);
-    }
-
-    private int calculateGroupOfCardsPoints(List<Card> cards){
-        int points = 0;
-
-        // Scopa
-        if(cards.containsAll(field)) {
-            points += 10;
-        }
-
-        if(cards.contains(new Card(CardName.SEVEN, Seed.MONEY))){
-            points += 10;
-        }
-        if(cards.contains(new Card(CardName.KING, Seed.MONEY))){
-            points += 10;
-        }
-        points += 4*cardByNameOccurs(cards, CardName.SEVEN);
-        points += 3*cardByNameOccurs(cards, CardName.SIX);
-        points += 2*cardBySeedOccurs(cards, Seed.MONEY);
-        points += cards.size();
-
-        return points;
-    }
-
     private List<Card> groupWithMaxPoints(Map<List<Card>, Integer> points) {
         int max = Integer.MIN_VALUE;
         List<Card> maxGroup = null;
 
-        for(Map.Entry<List<Card>, Integer> entry : points.entrySet()){
-            if(entry.getValue() > max){
+        for (Map.Entry<List<Card>, Integer> entry : points.entrySet()) {
+            if (entry.getValue() > max) {
                 max = entry.getValue();
                 maxGroup = entry.getKey();
             }
@@ -346,13 +325,63 @@ public class GameManager {
         int max = Integer.MIN_VALUE;
         Card maxCard = null;
 
-        for(Map.Entry<Card, Integer> entry : points.entrySet()){
-            if(entry.getValue() > max){
+        for (Map.Entry<Card, Integer> entry : points.entrySet()) {
+            if (entry.getValue() > max) {
                 max = entry.getValue();
                 maxCard = entry.getKey();
             }
         }
         return maxCard;
+    }
+
+    private int cardByNameOccurs(List<Card> cards, CardName cardName) {
+        int counter = 0;
+        for (Seed seed : Seed.values()) {
+            if (cards.contains(new Card(cardName, seed)))
+                counter++;
+        }
+        return counter;
+    }
+
+    private int cardBySeedOccurs(List<Card> cards, Seed seed) {
+        int counter = 0;
+        for (CardName cardName : CardName.values()) {
+            if (cards.contains(new Card(cardName, seed)))
+                counter++;
+        }
+        return counter;
+    }
+
+    private int getFieldValue() {
+        int sum = 0;
+        for (Card card : field) {
+            sum += card.cardName().getValue();
+        }
+        return sum;
+    }
+
+    public void checkIfTurnOverAndRefillCards() {
+        if (humanPlayer.getHand().isEmpty() && cpuPlayer.getHand().isEmpty()) {
+            giveThreeCardsToPlayers();
+        }
+    }
+
+    // GETTERS
+
+    public Player getHumanPlayer() {
+        return humanPlayer;
+    }
+
+    public Player getCpuPlayer() {
+        return cpuPlayer;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public List<Card> getField() {
+        return field;
     }
 
     public boolean hasCpuPlayedCard() {

@@ -53,7 +53,7 @@ public enum Asset {
     private final String path;
     private final ClassLoader cl = Asset.class.getClassLoader();
 
-    Asset(String path){
+    Asset(String path) {
         this.path = path;
     }
 
