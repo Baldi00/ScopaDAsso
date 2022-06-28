@@ -7,3 +7,5 @@
 .idea/sonarlint/
 .idea/sonarlint/issuestore/index.pb
 out/
+resources/META-INF/MANIFEST.MF
+.idea/artifacts/ScopaDAsso_jar.xml
