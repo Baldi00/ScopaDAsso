@@ -23,19 +23,21 @@ public class Controller {
     }
 
     public void updateView() {
-        view.setHumanPlayerCards(gameManager.getHumanPlayer().getHand());
-        view.setHumanPlayerBank(gameManager.getHumanPlayer().getBankWithoutMop(), gameManager.getHumanPlayer().getMop());
-        view.setHumanPlayerAdditionalPoints(gameManager.getHumanPlayer().getAdditionalPoints());
-        view.setCpuPlayerCards(gameManager.getCpuPlayer().getHand(), gameManager.getCpuPlayer().getLastPlayedCard(), gameManager.hasCpuPlayedCard());
-        view.setCpuPlayerBank(gameManager.getCpuPlayer().getBankWithoutMop(), gameManager.getCpuPlayer().getMop());
-        view.setCpuPlayerAdditionalPoints(gameManager.getCpuPlayer().getAdditionalPoints());
+        view.setHumanCards(gameManager.getHumanPlayer().getHand());
+        view.setHumanBank(gameManager.getHumanPlayer().getBankWithoutMop(), gameManager.getHumanPlayer().getMop());
+        view.setHumanAdditionalPoints(gameManager.getHumanPlayer().getAdditionalPoints());
+        view.setHumanGamePoints(gameManager.getHumanPlayer().getGamePoints());
+        view.setCpuCards(gameManager.getCpuPlayer().getHand(), gameManager.getCpuPlayer().getLastPlayedCard(), gameManager.hasCpuPlayedCard());
+        view.setCpuBank(gameManager.getCpuPlayer().getBankWithoutMop(), gameManager.getCpuPlayer().getMop());
+        view.setCpuAdditionalPoints(gameManager.getCpuPlayer().getAdditionalPoints());
+        view.setCpuGamePoints(gameManager.getCpuPlayer().getGamePoints());
         view.setDeck(gameManager.getDeck());
         view.setField(gameManager.getField());
         updateHumanPlayerCardClickListeners();
     }
 
     private void updateHumanPlayerCardClickListeners() {
-        JLabel[] humanPlayerCardsLabels = view.getHumanPlayerCardsLabels();
+        JLabel[] humanPlayerCardsLabels = view.getHumanCardsLabels();
         List<Card> humanPlayerCards = gameManager.getHumanPlayer().getHand();
         for (int i = 0; i < humanPlayerCards.size(); i++) {
             humanPlayerCardsLabels[i].removeMouseListener(cardClickListeners[i]);
@@ -57,7 +59,7 @@ public class Controller {
         Player humanPlayer = gameManager.getHumanPlayer();
         Player cpuPlayer = gameManager.getCpuPlayer();
         resultsView.setHumanPlayerPoints(
-                humanPlayer.getPoints(),
+                humanPlayer.getRoundPoints(),
                 humanPlayer.getBank().searchForBeautifulKing(),
                 humanPlayer.getBank().searchForBeautifulSeven(),
                 humanPlayer.getBank().searchForCoinsMajority(),
@@ -66,7 +68,7 @@ public class Controller {
         resultsView.setHumanPlayerCards(humanPlayer.getBankWithoutMop());
         resultsView.setHumanPlayerMops(humanPlayer.getMop());
         resultsView.setCpuPlayerPoints(
-                cpuPlayer.getPoints(),
+                cpuPlayer.getRoundPoints(),
                 cpuPlayer.getBank().searchForBeautifulKing(),
                 cpuPlayer.getBank().searchForBeautifulSeven(),
                 cpuPlayer.getBank().searchForCoinsMajority(),

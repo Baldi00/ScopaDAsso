@@ -14,19 +14,21 @@ public class View {
     private static final int CARD_WIDTH = 150;
     private static final int CARD_HEIGHT = 250;
 
-    private final JLabel[] humanPlayerCardsLabels;
-    private final JLabel[] cpuPlayerCardsLabels;
-    private final List<JLabel> humanPlayerMopsLabels;
-    private final List<JLabel> cpuPlayerMopsLabels;
+    private final JLabel humanInfoLabel;
+    private final JLabel cpuInfoLabel;
+    private final JLabel[] humanCardsLabels;
+    private final JLabel[] cpuCardsLabels;
+    private final List<JLabel> humanMopsLabels;
+    private final List<JLabel> cpuMopsLabels;
     private final JLabel[] fieldLabels;
     private final JLabel deckLabel;
-    private final JLabel humanPlayerBankLabel;
-    private final JLabel cpuPlayerBankLabel;
-    private final JLabel humanPlayerAdditionalPointsLabel;
-    private final JLabel cpuPlayerAdditionalPointsLabel;
+    private final JLabel humanBankLabel;
+    private final JLabel cpuBankLabel;
+    private final JLabel humanAdditionalPointsLabel;
+    private final JLabel cpuAdditionalPointsLabel;
+    private final JPanel humanMopsPanel;
+    private final JPanel cpuMopsPanel;
     private final JButton actionButton;
-    private final JPanel humanPlayerMopsPanel;
-    private final JPanel cpuPlayerMopsPanel;
 
     public View() {
         //INITIALIZATIONS
@@ -34,54 +36,64 @@ public class View {
         JPanel mainPanel = new JPanel(new BorderLayout());
         JPanel fieldPanel = new JPanel(new BorderLayout());
         JPanel fieldCardPanel = new JPanel(new GridLayout(2, 4, 0, 0));
-        JPanel humanPlayerPanel = new JPanel(new GridLayout(3, 1, 0, 0));
-        JPanel cpuPlayerPanel = new JPanel(new GridLayout(3, 1, 0, 0));
-        JPanel humanPlayerCardsPanel = new JPanel(new GridLayout(1, 3, 0, 0));
-        JPanel cpuPlayerCardsPanel = new JPanel(new GridLayout(1, 3, 0, 0));
-        JPanel humanPlayerBankPanel = new JPanel(new GridLayout(2, 1, 0, 0));
-        JPanel cpuPlayerBankPanel = new JPanel(new GridLayout(2, 1, 0, 0));
-        humanPlayerMopsPanel = new JPanel(new GridLayout(1, 20, 0, 0));
-        cpuPlayerMopsPanel = new JPanel(new GridLayout(1, 20, 0, 0));
-        humanPlayerMopsPanel.setPreferredSize(new Dimension(300, 500));
-        cpuPlayerMopsPanel.setPreferredSize(new Dimension(300, 500));
+        JPanel humanPanel = new JPanel(new GridLayout(3, 1, 0, 0));
+        JPanel cpuPanel = new JPanel(new GridLayout(3, 1, 0, 0));
+        JPanel humanCardsPanel = new JPanel(new BorderLayout());
+        JPanel cpuCardsPanel = new JPanel(new BorderLayout());
+        JPanel humanBankPanel = new JPanel(new GridLayout(2, 1, 0, 0));
+        JPanel cpuBankPanel = new JPanel(new GridLayout(2, 1, 0, 0));
+        humanMopsPanel = new JPanel(new GridLayout(1, 20, 0, 0));
+        cpuMopsPanel = new JPanel(new GridLayout(1, 20, 0, 0));
         actionButton = new JButton("Prosegui");
+
+        humanInfoLabel = new JLabel("TU: 0 punti");
+        cpuInfoLabel = new JLabel("CPU: 0 punti");
+        humanCardsLabels = new JLabel[3];
+        cpuCardsLabels = new JLabel[3];
+        fieldLabels = new JLabel[8];
+        deckLabel = new JLabel();
+
+        humanBankLabel = new JLabel();
+        cpuBankLabel = new JLabel();
+        humanAdditionalPointsLabel = new JLabel();
+        cpuAdditionalPointsLabel = new JLabel();
+        humanMopsLabels = new ArrayList<>();
+        cpuMopsLabels = new ArrayList<>();
 
         actionButton.setEnabled(false);
         actionButton.setName("proceed");
         actionButton.setPreferredSize(new Dimension(200, 100));
         actionButton.setFont(actionButton.getFont().deriveFont(18f));
 
-        humanPlayerCardsLabels = new JLabel[3];
-        cpuPlayerCardsLabels = new JLabel[3];
-
+        humanCardsPanel.add(humanInfoLabel, BorderLayout.NORTH);
+        cpuCardsPanel.add(cpuInfoLabel, BorderLayout.NORTH);
+        String [] coordinates = new String[]{BorderLayout.WEST, BorderLayout.CENTER, BorderLayout.EAST};
         for (int i = 0; i < 3; i++) {
-            humanPlayerCardsLabels[i] = new JLabel();
-            cpuPlayerCardsLabels[i] = new JLabel();
-            humanPlayerCardsLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
-            cpuPlayerCardsLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
-            humanPlayerCardsPanel.add(humanPlayerCardsLabels[i]);
-            cpuPlayerCardsPanel.add(cpuPlayerCardsLabels[i]);
+            humanCardsLabels[i] = new JLabel();
+            cpuCardsLabels[i] = new JLabel();
+            humanCardsLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
+            cpuCardsLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
+            humanCardsPanel.add(humanCardsLabels[i], coordinates[i]);
+            cpuCardsPanel.add(cpuCardsLabels[i], coordinates[i]);
         }
 
-        humanPlayerBankLabel = new JLabel();
-        cpuPlayerBankLabel = new JLabel();
-        humanPlayerAdditionalPointsLabel = new JLabel();
-        cpuPlayerAdditionalPointsLabel = new JLabel();
-        humanPlayerMopsLabels = new ArrayList<>();
-        cpuPlayerMopsLabels = new ArrayList<>();
+        humanMopsPanel.setPreferredSize(new Dimension(300, 500));
+        cpuMopsPanel.setPreferredSize(new Dimension(300, 500));
+        humanInfoLabel.setFont(humanInfoLabel.getFont().deriveFont(25f));
+        cpuInfoLabel.setFont(cpuInfoLabel.getFont().deriveFont(25f));
+        humanBankLabel.setFont(humanBankLabel.getFont().deriveFont(18f));
+        cpuBankLabel.setFont(cpuBankLabel.getFont().deriveFont(18f));
+        humanAdditionalPointsLabel.setFont(humanAdditionalPointsLabel.getFont().deriveFont(27f));
+        cpuAdditionalPointsLabel.setFont(cpuAdditionalPointsLabel.getFont().deriveFont(27f));
+        humanAdditionalPointsLabel.setForeground(Color.RED);
+        cpuAdditionalPointsLabel.setForeground(Color.RED);
+        humanInfoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        cpuInfoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        humanBankLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        cpuBankLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        humanAdditionalPointsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        cpuAdditionalPointsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        humanPlayerBankLabel.setFont(humanPlayerBankLabel.getFont().deriveFont(18f));
-        cpuPlayerBankLabel.setFont(humanPlayerBankLabel.getFont().deriveFont(18f));
-        humanPlayerAdditionalPointsLabel.setFont(humanPlayerBankLabel.getFont().deriveFont(27f));
-        cpuPlayerAdditionalPointsLabel.setFont(humanPlayerBankLabel.getFont().deriveFont(27f));
-        humanPlayerAdditionalPointsLabel.setForeground(Color.RED);
-        cpuPlayerAdditionalPointsLabel.setForeground(Color.RED);
-        humanPlayerBankLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        cpuPlayerBankLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        humanPlayerAdditionalPointsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        cpuPlayerAdditionalPointsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-        fieldLabels = new JLabel[8];
         for (int i = 0; i < 8; i++) {
             fieldLabels[i] = new JLabel();
             fieldLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
@@ -89,7 +101,6 @@ public class View {
         }
         fieldCardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-        deckLabel = new JLabel();
         deckLabel.setFont(deckLabel.getFont().deriveFont(18f));
         deckLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -98,21 +109,21 @@ public class View {
         fieldPanel.add(fieldCardPanel, BorderLayout.CENTER);
         fieldPanel.add(deckLabel, BorderLayout.SOUTH);
 
-        humanPlayerBankPanel.add(humanPlayerBankLabel);
-        humanPlayerBankPanel.add(humanPlayerAdditionalPointsLabel);
-        cpuPlayerBankPanel.add(cpuPlayerBankLabel);
-        cpuPlayerBankPanel.add(cpuPlayerAdditionalPointsLabel);
+        humanBankPanel.add(humanBankLabel);
+        humanBankPanel.add(humanAdditionalPointsLabel);
+        cpuBankPanel.add(cpuBankLabel);
+        cpuBankPanel.add(cpuAdditionalPointsLabel);
 
-        humanPlayerPanel.add(humanPlayerCardsPanel);
-        humanPlayerPanel.add(humanPlayerMopsPanel);
-        humanPlayerPanel.add(humanPlayerBankPanel);
-        cpuPlayerPanel.add(cpuPlayerCardsPanel);
-        cpuPlayerPanel.add(cpuPlayerMopsPanel);
-        cpuPlayerPanel.add(cpuPlayerBankPanel);
+        humanPanel.add(humanCardsPanel);
+        humanPanel.add(humanMopsPanel);
+        humanPanel.add(humanBankPanel);
+        cpuPanel.add(cpuCardsPanel);
+        cpuPanel.add(cpuMopsPanel);
+        cpuPanel.add(cpuBankPanel);
 
-        mainPanel.add(humanPlayerPanel, BorderLayout.WEST);
+        mainPanel.add(humanPanel, BorderLayout.WEST);
         mainPanel.add(fieldPanel, BorderLayout.CENTER);
-        mainPanel.add(cpuPlayerPanel, BorderLayout.EAST);
+        mainPanel.add(cpuPanel, BorderLayout.EAST);
 
         frame.add(mainPanel);
 
@@ -123,66 +134,66 @@ public class View {
         frame.setVisible(true);
     }
 
-    public void setHumanPlayerCards(List<Card> hand) {
+    public void setHumanCards(List<Card> hand) {
         for (int i = 0; i < 3; i++) {
-            humanPlayerCardsLabels[i].setIcon(null);
+            humanCardsLabels[i].setIcon(null);
         }
         for (int i = 0; i < hand.size(); i++) {
-            humanPlayerCardsLabels[i].setIcon(new ImageIcon(Utils.assetFromCard(hand.get(i)).getSprite(CARD_WIDTH, CARD_HEIGHT)));
+            humanCardsLabels[i].setIcon(new ImageIcon(Utils.assetFromCard(hand.get(i)).getSprite(CARD_WIDTH, CARD_HEIGHT)));
         }
     }
 
-    public void setHumanPlayerBank(List<Card> bankWithoutMop, List<Card> mop) {
-        humanPlayerMopsLabels.clear();
-        humanPlayerMopsPanel.removeAll();
+    public void setHumanBank(List<Card> bankWithoutMop, List<Card> mop) {
+        humanMopsLabels.clear();
+        humanMopsPanel.removeAll();
         for (Card card : mop) {
-            humanPlayerMopsLabels.add(new JLabel(new ImageIcon(Utils.assetFromCard(card).getSprite(CARD_WIDTH, CARD_HEIGHT))));
+            humanMopsLabels.add(new JLabel(new ImageIcon(Utils.assetFromCard(card).getSprite(CARD_WIDTH, CARD_HEIGHT))));
         }
-        for (JLabel label : humanPlayerMopsLabels) {
-            humanPlayerMopsPanel.add(label);
+        for (JLabel label : humanMopsLabels) {
+            humanMopsPanel.add(label);
         }
 
         if (bankWithoutMop.isEmpty()) {
-            humanPlayerBankLabel.setText("");
-            humanPlayerBankLabel.setIcon(null);
+            humanBankLabel.setText("");
+            humanBankLabel.setIcon(null);
         } else {
-            humanPlayerBankLabel.setText(bankWithoutMop.size() + CARDS_STRING);
-            humanPlayerBankLabel.setIcon(new ImageIcon(Asset.BACK_ROTATED.getSprite(CARD_HEIGHT, CARD_WIDTH)));
+            humanBankLabel.setText(bankWithoutMop.size() + CARDS_STRING);
+            humanBankLabel.setIcon(new ImageIcon(Asset.BACK_ROTATED.getSprite(CARD_HEIGHT, CARD_WIDTH)));
         }
     }
 
-    public void setCpuPlayerCards(List<Card> hand, Card lastPlayedCard, boolean hasCpuPlayedCard) {
+    public void setCpuCards(List<Card> hand, Card lastPlayedCard, boolean hasCpuPlayedCard) {
         for (int i = 0; i < 3; i++) {
-            cpuPlayerCardsLabels[i].setIcon(null);
+            cpuCardsLabels[i].setIcon(null);
         }
         for (int i = 0; i < hand.size(); i++) {
-            cpuPlayerCardsLabels[i].setIcon(new ImageIcon(Asset.BACK.getSprite(CARD_WIDTH, CARD_HEIGHT)));
+            cpuCardsLabels[i].setIcon(new ImageIcon(Asset.BACK.getSprite(CARD_WIDTH, CARD_HEIGHT)));
         }
 
         if (hasCpuPlayedCard) {
-            cpuPlayerCardsLabels[hand.size()].setIcon(new ImageIcon(Utils.assetFromCard(lastPlayedCard).getSprite(CARD_WIDTH, CARD_HEIGHT)));
+            cpuCardsLabels[hand.size()].setIcon(new ImageIcon(Utils.assetFromCard(lastPlayedCard).getSprite(CARD_WIDTH, CARD_HEIGHT)));
             actionButton.setEnabled(true);
         } else {
             actionButton.setEnabled(false);
         }
     }
 
-    public void setCpuPlayerBank(List<Card> bankWithoutMop, List<Card> mop) {
-        cpuPlayerMopsLabels.clear();
-        cpuPlayerMopsPanel.removeAll();
+    public void setCpuBank(List<Card> bankWithoutMop, List<Card> mop) {
+        cpuMopsLabels.clear();
+        cpuMopsPanel.removeAll();
         for (Card card : mop) {
-            cpuPlayerMopsLabels.add(new JLabel(new ImageIcon(Utils.assetFromCard(card).getSprite(CARD_WIDTH, CARD_HEIGHT))));
+            cpuMopsLabels.add(new JLabel(new ImageIcon(Utils.assetFromCard(card).getSprite(CARD_WIDTH, CARD_HEIGHT))));
         }
-        for (JLabel label : cpuPlayerMopsLabels) {
-            cpuPlayerMopsPanel.add(label);
+        for (JLabel label : cpuMopsLabels) {
+            cpuMopsPanel.add(label);
         }
 
         if (bankWithoutMop.isEmpty()) {
-            cpuPlayerBankLabel.setText("");
-            cpuPlayerBankLabel.setIcon(null);
+            cpuBankLabel.setText("");
+            cpuBankLabel.setIcon(null);
         } else {
-            cpuPlayerBankLabel.setText(bankWithoutMop.size() + CARDS_STRING);
-            cpuPlayerBankLabel.setIcon(new ImageIcon(Asset.BACK_ROTATED.getSprite(CARD_HEIGHT, CARD_WIDTH)));
+            cpuBankLabel.setText(bankWithoutMop.size() + CARDS_STRING);
+            cpuBankLabel.setIcon(new ImageIcon(Asset.BACK_ROTATED.getSprite(CARD_HEIGHT, CARD_WIDTH)));
         }
     }
 
@@ -205,30 +216,38 @@ public class View {
         }
     }
 
-    public void setHumanPlayerAdditionalPoints(List<Integer> points) {
+    public void setHumanAdditionalPoints(List<Integer> points) {
         if(!points.isEmpty()) {
-            humanPlayerAdditionalPointsLabel.setText("CUSA: ");
+            humanAdditionalPointsLabel.setText("CUSA: ");
             for (Integer i : points) {
-                humanPlayerAdditionalPointsLabel.setText(humanPlayerAdditionalPointsLabel.getText() + i + " ");
+                humanAdditionalPointsLabel.setText(humanAdditionalPointsLabel.getText() + i + " ");
             }
         }else{
-            humanPlayerAdditionalPointsLabel.setText("");
+            humanAdditionalPointsLabel.setText("");
         }
     }
 
-    public void setCpuPlayerAdditionalPoints(List<Integer> points) {
+    public void setCpuAdditionalPoints(List<Integer> points) {
         if(!points.isEmpty()) {
-            cpuPlayerAdditionalPointsLabel.setText("CUSA: ");
+            cpuAdditionalPointsLabel.setText("CUSA: ");
             for (Integer i : points) {
-                cpuPlayerAdditionalPointsLabel.setText(cpuPlayerAdditionalPointsLabel.getText() + i + " ");
+                cpuAdditionalPointsLabel.setText(cpuAdditionalPointsLabel.getText() + i + " ");
             }
         }else{
-            cpuPlayerAdditionalPointsLabel.setText("");
+            cpuAdditionalPointsLabel.setText("");
         }
     }
 
-    public JLabel[] getHumanPlayerCardsLabels() {
-        return humanPlayerCardsLabels;
+    public void setHumanGamePoints(int points) {
+        humanInfoLabel.setText("TU: " + points + " punti");
+    }
+
+    public void setCpuGamePoints(int points) {
+        cpuInfoLabel.setText("CPU: " + points + " punti");
+    }
+
+    public JLabel[] getHumanCardsLabels() {
+        return humanCardsLabels;
     }
 
     public JButton getActionButton() {

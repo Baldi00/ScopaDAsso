@@ -265,7 +265,8 @@ public class GameManager {
     }
 
     private void calculatePlayerPoints(Player player) {
-        player.setPoints(player.getBank().getResultPoints() + player.getTotalAdditionalPoints());
+        player.setRoundPoints(player.getBank().getResultPoints() + player.getTotalAdditionalPoints());
+        player.addGamePoints(player.getBank().getResultPoints() + player.getTotalAdditionalPoints());
     }
 
     // NEXT MATCH

@@ -8,13 +8,15 @@ public class Player {
     private Bank bank;
     private List<Integer> additionalPoints;
     private Card lastPlayedCard;
-    private int points;
+    private int roundPoints;
+    private int gamePoints;
 
     public Player() {
         hand = new ArrayList<>();
         bank = new Bank();
         additionalPoints = new ArrayList<>();
-        points = 0;
+        roundPoints = 0;
+        gamePoints = 0;
     }
 
     /**
@@ -61,12 +63,12 @@ public class Player {
         return lastPlayedCard;
     }
 
-    public int getPoints() {
-        return points;
+    public int getRoundPoints() {
+        return roundPoints;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
+    public void setRoundPoints(int roundPoints) {
+        this.roundPoints = roundPoints;
     }
 
     public Bank getBank() {
@@ -93,5 +95,14 @@ public class Player {
         hand = new ArrayList<>();
         bank = new Bank();
         additionalPoints = new ArrayList<>();
+        roundPoints = 0;
+    }
+
+    public void addGamePoints(int points){
+        gamePoints += points;
+    }
+
+    public int getGamePoints() {
+        return gamePoints;
     }
 }
