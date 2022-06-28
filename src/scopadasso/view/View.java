@@ -22,6 +22,8 @@ public class View {
     private final JLabel deckLabel;
     private final JLabel humanPlayerBankLabel;
     private final JLabel cpuPlayerBankLabel;
+    private final JLabel humanPlayerAdditionalPointsLabel;
+    private final JLabel cpuPlayerAdditionalPointsLabel;
     private final JButton confirmCpuActionButton;
     private final JPanel humanPlayerMopsPanel;
     private final JPanel cpuPlayerMopsPanel;
@@ -36,6 +38,8 @@ public class View {
         JPanel cpuPlayerPanel = new JPanel(new GridLayout(3, 1, 0, 0));
         JPanel humanPlayerCardsPanel = new JPanel(new GridLayout(1, 3, 0, 0));
         JPanel cpuPlayerCardsPanel = new JPanel(new GridLayout(1, 3, 0, 0));
+        JPanel humanPlayerBankPanel = new JPanel(new GridLayout(2, 1, 0, 0));
+        JPanel cpuPlayerBankPanel = new JPanel(new GridLayout(2, 1, 0, 0));
         humanPlayerMopsPanel = new JPanel(new GridLayout(1, 20, 0, 0));
         cpuPlayerMopsPanel = new JPanel(new GridLayout(1, 20, 0, 0));
         humanPlayerMopsPanel.setPreferredSize(new Dimension(300, 500));
@@ -60,13 +64,21 @@ public class View {
 
         humanPlayerBankLabel = new JLabel();
         cpuPlayerBankLabel = new JLabel();
+        humanPlayerAdditionalPointsLabel = new JLabel();
+        cpuPlayerAdditionalPointsLabel = new JLabel();
         humanPlayerMopsLabels = new ArrayList<>();
         cpuPlayerMopsLabels = new ArrayList<>();
 
         humanPlayerBankLabel.setFont(humanPlayerBankLabel.getFont().deriveFont(18f));
         cpuPlayerBankLabel.setFont(humanPlayerBankLabel.getFont().deriveFont(18f));
+        humanPlayerAdditionalPointsLabel.setFont(humanPlayerBankLabel.getFont().deriveFont(27f));
+        cpuPlayerAdditionalPointsLabel.setFont(humanPlayerBankLabel.getFont().deriveFont(27f));
+        humanPlayerAdditionalPointsLabel.setForeground(Color.RED);
+        cpuPlayerAdditionalPointsLabel.setForeground(Color.RED);
         humanPlayerBankLabel.setHorizontalAlignment(SwingConstants.CENTER);
         cpuPlayerBankLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        humanPlayerAdditionalPointsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        cpuPlayerAdditionalPointsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         fieldLabels = new JLabel[8];
         for (int i = 0; i < 8; i++) {
@@ -85,12 +97,17 @@ public class View {
         fieldPanel.add(fieldCardPanel, BorderLayout.CENTER);
         fieldPanel.add(deckLabel, BorderLayout.SOUTH);
 
+        humanPlayerBankPanel.add(humanPlayerBankLabel);
+        humanPlayerBankPanel.add(humanPlayerAdditionalPointsLabel);
+        cpuPlayerBankPanel.add(cpuPlayerBankLabel);
+        cpuPlayerBankPanel.add(cpuPlayerAdditionalPointsLabel);
+
         humanPlayerPanel.add(humanPlayerCardsPanel);
         humanPlayerPanel.add(humanPlayerMopsPanel);
-        humanPlayerPanel.add(humanPlayerBankLabel);
+        humanPlayerPanel.add(humanPlayerBankPanel);
         cpuPlayerPanel.add(cpuPlayerCardsPanel);
         cpuPlayerPanel.add(cpuPlayerMopsPanel);
-        cpuPlayerPanel.add(cpuPlayerBankLabel);
+        cpuPlayerPanel.add(cpuPlayerBankPanel);
 
         mainPanel.add(humanPlayerPanel, BorderLayout.WEST);
         mainPanel.add(fieldPanel, BorderLayout.CENTER);
@@ -184,6 +201,28 @@ public class View {
         }
         for (int i = 0; i < field.size(); i++) {
             fieldLabels[i].setIcon(new ImageIcon(Utils.assetFromCard(field.get(i)).getSprite(CARD_WIDTH, CARD_HEIGHT)));
+        }
+    }
+
+    public void setHumanPlayerAdditionalPoints(List<Integer> points) {
+        if(!points.isEmpty()) {
+            humanPlayerAdditionalPointsLabel.setText("CUSA: ");
+            for (Integer i : points) {
+                humanPlayerAdditionalPointsLabel.setText(humanPlayerAdditionalPointsLabel.getText() + i + " ");
+            }
+        }else{
+            humanPlayerAdditionalPointsLabel.setText("");
+        }
+    }
+
+    public void setCpuPlayerAdditionalPoints(List<Integer> points) {
+        if(!points.isEmpty()) {
+            cpuPlayerAdditionalPointsLabel.setText("CUSA: ");
+            for (Integer i : points) {
+                cpuPlayerAdditionalPointsLabel.setText(cpuPlayerAdditionalPointsLabel.getText() + i + " ");
+            }
+        }else{
+            cpuPlayerAdditionalPointsLabel.setText("");
         }
     }
 

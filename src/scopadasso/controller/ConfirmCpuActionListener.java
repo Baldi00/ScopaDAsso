@@ -25,6 +25,7 @@ public class ConfirmCpuActionListener implements ActionListener {
                 controller.showMatchResults();
             } else {
                 gameManager.giveThreeCardsToPlayers();
+                gameManager.calculateAdditionalPointsFor(gameManager.getHumanPlayer());
             }
         }
 

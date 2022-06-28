@@ -21,6 +21,7 @@ public class CardClickListener implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         if (!gameManager.hasCpuPlayedCard()) {
             gameManager.humanPlayerPlayCard(card);
+            gameManager.calculateAdditionalPointsFor(gameManager.getCpuPlayer());
             gameManager.cpuPlayerPlayCard();
             controller.updateView();
         }
