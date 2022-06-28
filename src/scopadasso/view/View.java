@@ -94,7 +94,7 @@ public class View {
         //LAST SETTINGS AND SHOW
         frame.setSize(1366, 768);
         frame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 

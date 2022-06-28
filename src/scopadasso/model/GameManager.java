@@ -251,6 +251,16 @@ public class GameManager {
             lastPlayerWhoPickedCards.addToBank(card);
         field.clear();
     }
+
+    public void calculateMatchResults() {
+        calculatePlayerPoints(humanPlayer);
+        calculatePlayerPoints(cpuPlayer);
+    }
+
+    private void calculatePlayerPoints(Player player) {
+        player.setPoints(player.getBank().getResultPoints());
+    }
+
     // UTILS
 
     private int calculateGroupOfCardsPoints(List<Card> cards) {

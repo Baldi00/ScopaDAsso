@@ -21,6 +21,8 @@ public class ConfirmCpuActionListener implements ActionListener {
         if(gameManager.isTurnOver()) {
             if (gameManager.isGameOver()) {
                 gameManager.giveLastFieldCardsToLastPlayerWhoPicked();
+                gameManager.calculateMatchResults();
+                controller.showMatchResults();
             } else {
                 gameManager.giveThreeCardsToPlayers();
             }

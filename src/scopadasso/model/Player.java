@@ -7,10 +7,12 @@ public class Player {
     private final List<Card> hand;
     private final Bank bank;
     private Card lastPlayedCard;
+    private int points;
 
     public Player() {
         hand = new ArrayList<>();
         bank = new Bank();
+        points = 0;
     }
 
     /**
@@ -57,4 +59,15 @@ public class Player {
         return lastPlayedCard;
     }
 
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public Bank getBank() {
+        return bank;
+    }
 }

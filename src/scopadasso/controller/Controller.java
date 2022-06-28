@@ -2,6 +2,8 @@ package scopadasso.controller;
 
 import scopadasso.model.Card;
 import scopadasso.model.GameManager;
+import scopadasso.model.Player;
+import scopadasso.view.ResultsView;
 import scopadasso.view.View;
 
 import javax.swing.*;
@@ -46,5 +48,17 @@ public class Controller {
 
     private void addConfirmCpuActionButtonListener() {
         view.getConfirmCpuActionButton().addActionListener(new ConfirmCpuActionListener(gameManager, this));
+    }
+
+    public void showMatchResults() {
+        ResultsView resultsView = new ResultsView();
+        Player humanPlayer = gameManager.getHumanPlayer();
+        Player cpuPlayer = gameManager.getCpuPlayer();
+        resultsView.setHumanPlayerPoints(humanPlayer.getPoints());
+        resultsView.setHumanPlayerCards(humanPlayer.getBankWithoutMop());
+        resultsView.setHumanPlayerMops(humanPlayer.getMop());
+        resultsView.setCpuPlayerPoints(cpuPlayer.getPoints());
+        resultsView.setCpuPlayerCards(cpuPlayer.getBankWithoutMop());
+        resultsView.setCpuPlayerMops(cpuPlayer.getMop());
     }
 }
