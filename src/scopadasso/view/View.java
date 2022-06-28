@@ -43,6 +43,7 @@ public class View {
 
         confirmCpuActionButton.setEnabled(false);
         confirmCpuActionButton.setPreferredSize(new Dimension(200, 100));
+        confirmCpuActionButton.setFont(confirmCpuActionButton.getFont().deriveFont(18f));
 
         humanPlayerCardsLabels = new JLabel[3];
         cpuPlayerCardsLabels = new JLabel[3];
@@ -61,6 +62,8 @@ public class View {
         humanPlayerMopsLabels = new ArrayList<>();
         cpuPlayerMopsLabels = new ArrayList<>();
 
+        humanPlayerBankLabel.setFont(humanPlayerBankLabel.getFont().deriveFont(18f));
+        cpuPlayerBankLabel.setFont(humanPlayerBankLabel.getFont().deriveFont(18f));
         humanPlayerBankLabel.setHorizontalAlignment(SwingConstants.CENTER);
         cpuPlayerBankLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -73,6 +76,7 @@ public class View {
         fieldCardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         deckLabel = new JLabel();
+        deckLabel.setFont(deckLabel.getFont().deriveFont(18f));
         deckLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         //ASSEMBLY
