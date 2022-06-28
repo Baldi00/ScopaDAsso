@@ -54,10 +54,22 @@ public class Controller {
         ResultsView resultsView = new ResultsView();
         Player humanPlayer = gameManager.getHumanPlayer();
         Player cpuPlayer = gameManager.getCpuPlayer();
-        resultsView.setHumanPlayerPoints(humanPlayer.getPoints());
+        resultsView.setHumanPlayerPoints(
+                humanPlayer.getPoints(),
+                humanPlayer.getBank().searchForBeautifulKing(),
+                humanPlayer.getBank().searchForBeautifulSeven(),
+                humanPlayer.getBank().searchForCoinsMajority(),
+                humanPlayer.getBank().searchForPrimiera(),
+                humanPlayer.getBank().searchForCardsNumberMajority());
         resultsView.setHumanPlayerCards(humanPlayer.getBankWithoutMop());
         resultsView.setHumanPlayerMops(humanPlayer.getMop());
-        resultsView.setCpuPlayerPoints(cpuPlayer.getPoints());
+        resultsView.setCpuPlayerPoints(
+                cpuPlayer.getPoints(),
+                cpuPlayer.getBank().searchForBeautifulKing(),
+                cpuPlayer.getBank().searchForBeautifulSeven(),
+                cpuPlayer.getBank().searchForCoinsMajority(),
+                cpuPlayer.getBank().searchForPrimiera(),
+                cpuPlayer.getBank().searchForCardsNumberMajority());
         resultsView.setCpuPlayerCards(cpuPlayer.getBankWithoutMop());
         resultsView.setCpuPlayerMops(cpuPlayer.getMop());
     }

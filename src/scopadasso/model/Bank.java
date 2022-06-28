@@ -35,11 +35,11 @@ public class Bank {
         return beautifulKing + beautifulSeven + coins + primiera + cardsNumber;
     }
 
-    private int searchForBeautifulKing() {
+    public int searchForBeautifulKing() {
         return searchForCard(new Card(CardName.KING, Seed.MONEY));
     }
 
-    private int searchForBeautifulSeven() {
+    public int searchForBeautifulSeven() {
         return searchForCard(new Card(CardName.SEVEN, Seed.MONEY));
     }
 
@@ -47,7 +47,7 @@ public class Bank {
         return cards.contains(card) ? 1 : 0;
     }
 
-    private int searchForCoinsMajority() {
+    public int searchForCoinsMajority() {
         int coinsCounter = countCoins();
         return coinsCounter > 5 ? 1 : 0;
     }
@@ -62,7 +62,7 @@ public class Bank {
         return counter;
     }
 
-    private int searchForPrimiera() {
+    public int searchForPrimiera() {
         int sevenNumber = countSeven();
         int sixNumber = countSix();
 
@@ -95,7 +95,7 @@ public class Bank {
         return counter;
     }
 
-    private int searchForCardsNumberMajority() {
+    public int searchForCardsNumberMajority() {
         return cards.size() > 20 ? 1 : 0;
     }
 
