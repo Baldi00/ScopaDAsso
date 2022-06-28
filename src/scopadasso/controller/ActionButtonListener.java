@@ -28,7 +28,7 @@ public class ActionButtonListener implements ActionListener {
                     controller.showMatchResults();
                 } else {
                     gameManager.giveThreeCardsToPlayers();
-                    gameManager.calculateAdditionalPointsFor(gameManager.getHumanPlayer());
+                    gameManager.calculateAdditionalPoints();
                 }
             }
             controller.updateView();
@@ -42,7 +42,6 @@ public class ActionButtonListener implements ActionListener {
             controller.setActionButton("proceed", "Prosegui", false);
 
             if(gameManager.getStartingPlayer() == gameManager.getCpuPlayer()) {
-                gameManager.calculateAdditionalPointsFor(gameManager.getCpuPlayer());
                 gameManager.cpuPlayerPlayCard();
             }
 

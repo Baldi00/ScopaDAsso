@@ -28,7 +28,7 @@ public class GameManager {
         deck.shuffleDeck();
         prepareField();
         giveThreeCardsToPlayers();
-        calculateAdditionalPointsFor(humanPlayer);
+        calculateAdditionalPoints();
     }
 
     private void prepareField() {
@@ -415,6 +415,11 @@ public class GameManager {
 
     public boolean isLastTurnOfTheGame() {
         return isTurnOver() && isGameOver() && !hasCpuPlayedCard;
+    }
+
+    public void calculateAdditionalPoints() {
+        calculateAdditionalPointsFor(humanPlayer);
+        calculateAdditionalPointsFor(cpuPlayer);
     }
 
     public void calculateAdditionalPointsFor(Player player) {

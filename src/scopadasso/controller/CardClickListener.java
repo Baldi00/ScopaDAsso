@@ -29,15 +29,12 @@ public class CardClickListener implements MouseListener {
                     controller.showMatchResults();
                 } else {
                     gameManager.giveThreeCardsToPlayers();
+                    gameManager.calculateAdditionalPoints();
                     if(gameManager.getStartingPlayer() == gameManager.getCpuPlayer()) {
-                        gameManager.calculateAdditionalPointsFor(gameManager.getCpuPlayer());
                         gameManager.cpuPlayerPlayCard();
-                    }else {
-                        gameManager.calculateAdditionalPointsFor(gameManager.getHumanPlayer());
                     }
                 }
             } else {
-                gameManager.calculateAdditionalPointsFor(gameManager.getCpuPlayer());
                 gameManager.cpuPlayerPlayCard();
             }
 
