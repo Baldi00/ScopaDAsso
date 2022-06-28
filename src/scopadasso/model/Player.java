@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private final int id;
     private final List<Card> hand;
     private final Bank bank;
     private Card lastPlayedCard;
 
-    public Player(int id) {
-        this.id = id;
+    public Player() {
         hand = new ArrayList<>();
         bank = new Bank();
     }
@@ -19,16 +17,14 @@ public class Player {
      * Removes the card from the hand
      *
      * @param card the card you want to play
-     * @return the played card
      * @throws IllegalStateException if player doesn't have the given card
      */
-    public Card playCard(Card card) {
+    public void playCard(Card card) {
         if (!hand.contains(card))
-            throw new IllegalStateException("Player " + id + " doesn't have " + card);
+            throw new IllegalStateException("Player doesn't have " + card);
 
         hand.remove(card);
         lastPlayedCard = card;
-        return card;
     }
 
     public void receiveCard(Card card) {

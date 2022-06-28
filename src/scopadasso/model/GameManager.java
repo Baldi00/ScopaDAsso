@@ -1,8 +1,6 @@
 package scopadasso.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class GameManager {
     private Player humanPlayer;
@@ -12,8 +10,8 @@ public class GameManager {
     private boolean hasCpuPlayedCard;
 
     public GameManager() {
-        humanPlayer = new Player(0);
-        cpuPlayer = new Player(1);
+        humanPlayer = new Player();
+        cpuPlayer = new Player();
         field = new ArrayList<>();
         deck = new Deck();
         hasCpuPlayedCard = false;
@@ -36,8 +34,8 @@ public class GameManager {
     }
 
     private void reinitialize() {
-        humanPlayer = new Player(0);
-        cpuPlayer = new Player(1);
+        humanPlayer = new Player();
+        cpuPlayer = new Player();
         field = new ArrayList<>();
         deck = new Deck();
     }
