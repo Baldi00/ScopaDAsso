@@ -73,10 +73,12 @@ public class View {
         fieldCardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         deckLabel = new JLabel();
+        deckLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         //ASSEMBLY
         fieldPanel.add(confirmCpuActionButton, BorderLayout.NORTH);
         fieldPanel.add(fieldCardPanel, BorderLayout.CENTER);
+        fieldPanel.add(deckLabel, BorderLayout.SOUTH);
 
         humanPlayerPanel.add(humanPlayerCardsPanel);
         humanPlayerPanel.add(humanPlayerMopsPanel);
@@ -162,7 +164,13 @@ public class View {
     }
 
     public void setDeck(Deck deck) {
-        deckLabel.setText("" + deck.size());
+        if(deck.size() != 0) {
+            deckLabel.setText(deck.size() + " carte");
+            deckLabel.setIcon(new ImageIcon(Asset.BACK_ROTATED.getSprite(CARD_HEIGHT, CARD_WIDTH)));
+        }else{
+            deckLabel.setText("Mazzo vuoto");
+            deckLabel.setIcon(null);
+        }
     }
 
     public void setField(List<Card> field) {
