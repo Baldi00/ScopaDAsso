@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private final List<Card> hand;
-    private final Bank bank;
-    private final List<Integer> additionalPoints;
+    private List<Card> hand;
+    private Bank bank;
+    private List<Integer> additionalPoints;
     private Card lastPlayedCard;
     private int points;
 
@@ -87,5 +87,11 @@ public class Player {
             sum += i;
         }
         return sum;
+    }
+
+    public void clear() {
+        hand = new ArrayList<>();
+        bank = new Bank();
+        additionalPoints = new ArrayList<>();
     }
 }

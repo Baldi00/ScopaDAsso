@@ -266,6 +266,14 @@ public class GameManager {
         player.setPoints(player.getBank().getResultPoints() + player.getTotalAdditionalPoints());
     }
 
+    // NEXT MATCH
+
+    public void nextMatch() {
+        humanPlayer.clear();
+        cpuPlayer.clear();
+        deck = new Deck();
+    }
+
     // UTILS
 
     private int calculateGroupOfCardsPoints(List<Card> cards) {

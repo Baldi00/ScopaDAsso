@@ -24,7 +24,7 @@ public class View {
     private final JLabel cpuPlayerBankLabel;
     private final JLabel humanPlayerAdditionalPointsLabel;
     private final JLabel cpuPlayerAdditionalPointsLabel;
-    private final JButton confirmCpuActionButton;
+    private final JButton actionButton;
     private final JPanel humanPlayerMopsPanel;
     private final JPanel cpuPlayerMopsPanel;
 
@@ -44,11 +44,12 @@ public class View {
         cpuPlayerMopsPanel = new JPanel(new GridLayout(1, 20, 0, 0));
         humanPlayerMopsPanel.setPreferredSize(new Dimension(300, 500));
         cpuPlayerMopsPanel.setPreferredSize(new Dimension(300, 500));
-        confirmCpuActionButton = new JButton("Prosegui");
+        actionButton = new JButton("Prosegui");
 
-        confirmCpuActionButton.setEnabled(false);
-        confirmCpuActionButton.setPreferredSize(new Dimension(200, 100));
-        confirmCpuActionButton.setFont(confirmCpuActionButton.getFont().deriveFont(18f));
+        actionButton.setEnabled(false);
+        actionButton.setName("proceed");
+        actionButton.setPreferredSize(new Dimension(200, 100));
+        actionButton.setFont(actionButton.getFont().deriveFont(18f));
 
         humanPlayerCardsLabels = new JLabel[3];
         cpuPlayerCardsLabels = new JLabel[3];
@@ -93,7 +94,7 @@ public class View {
         deckLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         //ASSEMBLY
-        fieldPanel.add(confirmCpuActionButton, BorderLayout.NORTH);
+        fieldPanel.add(actionButton, BorderLayout.NORTH);
         fieldPanel.add(fieldCardPanel, BorderLayout.CENTER);
         fieldPanel.add(deckLabel, BorderLayout.SOUTH);
 
@@ -160,9 +161,9 @@ public class View {
 
         if (hasCpuPlayedCard) {
             cpuPlayerCardsLabels[hand.size()].setIcon(new ImageIcon(Utils.assetFromCard(lastPlayedCard).getSprite(CARD_WIDTH, CARD_HEIGHT)));
-            confirmCpuActionButton.setEnabled(true);
+            actionButton.setEnabled(true);
         } else {
-            confirmCpuActionButton.setEnabled(false);
+            actionButton.setEnabled(false);
         }
     }
 
@@ -230,7 +231,13 @@ public class View {
         return humanPlayerCardsLabels;
     }
 
-    public JButton getConfirmCpuActionButton() {
-        return confirmCpuActionButton;
+    public JButton getActionButton() {
+        return actionButton;
+    }
+
+    public void setActionButton(String name, String text, boolean enabled){
+        actionButton.setName(name);
+        actionButton.setText(text);
+        actionButton.setEnabled(enabled);
     }
 }

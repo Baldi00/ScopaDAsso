@@ -49,7 +49,7 @@ public class Controller {
     }
 
     private void addConfirmCpuActionButtonListener() {
-        view.getConfirmCpuActionButton().addActionListener(new ConfirmCpuActionListener(gameManager, this));
+        view.getActionButton().addActionListener(new ActionButtonListener(gameManager, this));
     }
 
     public void showMatchResults() {
@@ -74,5 +74,9 @@ public class Controller {
                 cpuPlayer.getBank().searchForCardsNumberMajority());
         resultsView.setCpuPlayerCards(cpuPlayer.getBankWithoutMop());
         resultsView.setCpuPlayerMops(cpuPlayer.getMop());
+    }
+
+    public void setActionButton(String name, String text, boolean enabled){
+        view.setActionButton(name, text, enabled);
     }
 }
